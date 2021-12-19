@@ -5,13 +5,7 @@ from aws_cdk import (
     aws_events_targets as targets_,
     aws_iam,
     aws_cloudwatch as cloudwatch_,
-    aws_sns as sns,
-    aws_sns_subscriptions as subscriptions_,
-    aws_cloudwatch_actions as actions_,
-    aws_dynamodb as db
 )
-
-#import constants as constants
 
 # For consistency with other languages, `cdk` is the preferred import name for
 # the CDK's core module.  The following line also imports it as `core` for use
@@ -30,7 +24,6 @@ class PcwaheedprojectStack(cdk.Stack):
 
         lambda_role= self.create_lambda_role()
         hw_lambda = self.create_lambda("lambda", "./resources", "webhealthmonitor.lambda_handler", lambda_role)
-        #2 db_lambda = self.create_lambda("DynamoDBLambda", "./resources", dynamodb_lambda.lambda_handler, lambda_role)
         lambda_schedule= events_.Schedule.rate(cdk.Duration.minutes(1))
         lambda_target=targets_.LambdaFunction(handler=hw_lambda)
         rule= events_.Rule(self, "webHealth_invoke", 
@@ -38,22 +31,12 @@ class PcwaheedprojectStack(cdk.Stack):
                             enabled= True ,
                             schedule= lambda_schedule,
                             targets= [lambda_target]) #remeber the braces, i spent so much time to figure out this error, cz this is treateda as array
-        #2 create table here 
-        #2dynamo_table=self.create_table()
-        #####also provide full read write access to table
+    
         
-        #####module code for sending sns notifications########################################################
-        #1topic = sns.Topic(self, "webhealth")
-        #1topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
-        #2topic.add_subscription(subscription_.LambdaSubscription(fn=db_lambda))
-        
-        
-        dimension={'URL' :constants.URL_TO_MONITOR}
-        availability_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
-                                                metric_name= constants.URL_MONIROR_NAME_AVAILABILITY,
-                                                dimensions_map=dimension,
-                                                period=cdk.Duration.minutes(1),
-                                                label= 'Availability Metric')
+        dimension={'Name': 'URL' , 'Value': constants.URL_to_Monitor}
+        availability_metric=cloudwatch_.Matric(namespace=constants.U, 
+                                                metricName= constants.URL_MONIROR_NAME_AVAILABILITY,
+                                                dimensions_map=dimension)
         availability_alarm= cloudwatch_.Alarm(self, 
 			id='AvailabilityAlarm',
 			metric= availability_metric , 
@@ -61,22 +44,15 @@ class PcwaheedprojectStack(cdk.Stack):
 			datapoint_to_alarm=1, evaluation_periods=1,
 		 	threshold=1) 
     
-        dimension={'URL':constants.URL_TO_MONITOR}
-        latency_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
-                                         metric_name= constants.URL_MONIROR_NAME_LATENCY,
-                                         dimensions_map=dimension,
-                                         period=cdk.Duration.minutes(1),
-                                         label= 'latency Metric' )
+        dimension={'Name': 'URL' , 'Value': constants.URL_to_Monitor}
+        latency_metric=cloudwatch_.Matric(namespace=constants.URL_MONITOR_NAMESPACE, metricName= constants.URL_MONIROR_NAME_LATENCY,dimensions_map=dimension)
         latency_alarm= cloudwatch_.Alarm(self, 
 			id='LatencyAlarm',
 			metric= latency_metric , 
 			comparsion_operator= cloudwatch_.ComparisonOperation.GREATER_THAN_THRESHOLD  , 
 			datapoint_to_alarm=1, evaluation_periods=1,
-		 	threshold=0.26 )
+		 	threshold=0.33)
     
-    ###########link the alarm to subscription
-    #1availability_alarm.add_alarm_action(actions_.sns_action(topic))
-    #1latency_alarm.add_alarm_action(actions_.sns_action(topic))
     
     
     def create_lambda_role(self):
@@ -96,5 +72,4 @@ class PcwaheedprojectStack(cdk.Stack):
         role=role
 )
 
-    #2def create_table():
-     #2   return db.Table
+#def db
