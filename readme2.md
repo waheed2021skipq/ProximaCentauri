@@ -1,9 +1,9 @@
 <div id="top"></div>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Sprint1 project skipq</h3>
 
   <p align="center">
-    project_description
+    Create alarms and send notifications to subscribers when certain threshold is reached
     <br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
@@ -57,16 +57,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 
 
-### Built With
+### tools used
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [aws amazon](https://aws.amazon.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -75,17 +68,30 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+You need to goto amazon aws webiste 'https://aws.amazon.com/' and sign up with a IAM user account, 
+set up an environment with your required specifications and get started with aws command line interface
+
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+
 * npm
   ```sh
   npm install npm@latest -g
   ```
-
+ * aws latest version
+ * for linux
+  ```curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+  ```
+  for windows
+    ```msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
+  ```
+  
+* python latest version
+  ```python --version
+  ```
 ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
