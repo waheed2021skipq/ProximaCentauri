@@ -86,19 +86,16 @@ sudo ./aws/install
   ```
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. goto aws.amazon.com
 2. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone 'your repo '
    ```
 3. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+4. Use cli and python code for desired tasked
 
 
 
