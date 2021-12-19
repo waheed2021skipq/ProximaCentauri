@@ -4,6 +4,10 @@ from cloudmatricdata import cloudmetric1
 import constants as constants
 
 #URL_TO_MONITOR='www.bbc.com'
+# URL_TO_MONITOR='www.twitter.com'
+# URL_MONITOR_NAMESPACE="waheedwebhealth"
+# URL_MONIROR_NAME_AVAILABILITY= "url_availabiloty"
+# URL_MONIROR_NAME_LATENCY= "url_latency"
 
 def lambda_handler(events,context):
     values = dict()
@@ -13,7 +17,7 @@ def lambda_handler(events,context):
     
     avail= get_availability()   #now we are putting matrices to cloudwatch  
     dimensions=[
-        {'Name': 'URL' , 'Value': constants.URL_TO_MONITOR }
+        {'Name': 'URL' , 'Value':constants.URL_TO_MONITOR }
      #   {'Name': 'Region' , 'Value': "DUB"}
         
         ]
@@ -47,5 +51,5 @@ def get_latency():
     response=http.request("GET",constants.URL_TO_MONITOR)
     end=datetime.datetime.now()
     delta =end-start
-    latencySecc=round(delta.mircoseconds * 0.000001,6)
+    latencySecc=round(delta.microseconds * 0.000001,6)
     return latencySecc

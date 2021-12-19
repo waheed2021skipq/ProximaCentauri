@@ -11,13 +11,17 @@ from aws_cdk import (
     aws_dynamodb as db
 )
 
-
 # For consistency with other languages, `cdk` is the preferred import name for
 # the CDK's core module.  The following line also imports it as `core` for use
 # with examples from the CDK Developer's Guide, which are in the process of
 # being updated to use `cdk`.  You may delete this import if you don't need it.
 #
 from aws_cdk import core
+
+URL_TO_MONITOR='www.twitter.com'
+URL_MONITOR_NAMESPACE="waheedwebhealth"
+URL_MONIROR_NAME_AVAILABILITY= "url_availability"
+URL_MONIROR_NAME_LATENCY= "url_latency"
 
 
 class PcwaheedprojectStack(cdk.Stack):
@@ -29,7 +33,7 @@ class PcwaheedprojectStack(cdk.Stack):
 
         lambda_role= self.create_lambda_role()
         hw_lambda = self.create_lambda('lambda', './resources', 'webhealthmonitor.lambda_handler', lambda_role)
-        #2 db_lambda = self.create_lambda("DynamoDBLambda", "./resources", dynamodb_lambda.lambda_handler, lambda_role)
+        #2db_lambda = self.create_lambda("DynamoDBLambda", "./resources", dynamodb_lambda.lambda_handler, lambda_role)
         lambda_schedule= events_.Schedule.rate(cdk.Duration.minutes(1))
         lambda_target=targets_.LambdaFunction(handler=hw_lambda)
         rule= events_.Rule(self, "webHealth_invoke", 
@@ -42,40 +46,44 @@ class PcwaheedprojectStack(cdk.Stack):
         #####also provide full read write access to table
         
         #####module code for sending sns notifications########################################################
-        #1topic = sns.Topic(self, "webhealth")
-        #1topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
-        #2topic.add_subscription(subscription_.LambdaSubscription(fn=db_lambda))
+        topic =sns.Topic(self, "webhealth")
+        topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
+        #topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
+        # import sys 
+        # sys.path.insert('', '/ProximaCentauri/waheed_ahmad/sprint1/pcwaheedproject/resources')
+        # import constants as constants
         
-        
-        dimension={'URL' : constants.URL_TO_MONITOR}
-        availability_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
-                                                metric_name= constants.URL_MONIROR_NAME_AVAILABILITY,
+        dimension={'URL' :URL_TO_MONITOR}
+        availability_metric=cloudwatch_.Metric(namespace=URL_MONITOR_NAMESPACE, 
+                                                metric_name= URL_MONIROR_NAME_AVAILABILITY,
                                                 dimensions_map=dimension,
                                                 period=cdk.Duration.minutes(1),
                                                 label= 'Availability Metric')
         availability_alarm= cloudwatch_.Alarm(self, 
 			id='AvailabilityAlarm',
 			metric= availability_metric , 
-			comparsion_operator= cloudwatch_.ComparisonOperation.LESS_THAN_OPERATOR  , 
-			datapoint_to_alarm=1, evaluation_periods=1,
-		 	threshold=1) 
+			comparison_operator= cloudwatch_.ComparisonOperator.LESS_THAN_THRESHOLD  , 
+			datapoints_to_alarm=1, 
+			evaluation_periods=1,
+		 	threshold=1)    
     
-        dimension={'URL':constants.URL_TO_MONITOR}
-        latency_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
-                                         metric_name= constants.URL_MONIROR_NAME_LATENCY,
+        dimension={'URL':URL_TO_MONITOR}
+        latency_metric=cloudwatch_.Metric(namespace=URL_MONITOR_NAMESPACE, 
+                                         metric_name=URL_MONIROR_NAME_LATENCY,
                                          dimensions_map=dimension,
                                          period=cdk.Duration.minutes(1),
                                          label= 'latency Metric' )
         latency_alarm= cloudwatch_.Alarm(self, 
 			id='LatencyAlarm',
 			metric= latency_metric , 
-			comparsion_operator= cloudwatch_.ComparisonOperation.GREATER_THAN_THRESHOLD  , 
-			datapoint_to_alarm=1, evaluation_periods=1,
-		 	threshold=0.26 )
+			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD , 
+			datapoints_to_alarm=1, 
+			evaluation_periods=1,
+		 	threshold=0.2 )
     
     ###########link the alarm to subscription
-    #1availability_alarm.add_alarm_action(actions_.sns_action(topic))
-    #1latency_alarm.add_alarm_action(actions_.sns_action(topic))
+        availability_alarm.add_alarm_action(actions_.SnsAction(topic))
+        latency_alarm.add_alarm_action(actions_.SnsAction(topic))
     
     
     def create_lambda_role(self):
