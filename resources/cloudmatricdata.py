@@ -12,9 +12,9 @@ class cloudmetric1:
 			 {
 				 'MetricName' : metricName,
 				 'Dimensions' : dimensions,
-				 'Value' :value
+				 'Value' :value 
 				        
 			  }
 				  
-				      ]
+			]	      
 )

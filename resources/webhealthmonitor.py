@@ -1,8 +1,7 @@
 import urllib3
 import datetime
-import constants as constants
 from cloudmatricdata import cloudmetric1
-
+import constants as constants
 
 #URL_TO_MONITOR='www.bbc.com'
 

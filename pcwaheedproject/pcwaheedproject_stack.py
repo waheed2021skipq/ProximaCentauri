@@ -11,7 +11,6 @@ from aws_cdk import (
     aws_dynamodb as db
 )
 
-#import constants as constants
 
 # For consistency with other languages, `cdk` is the preferred import name for
 # the CDK's core module.  The following line also imports it as `core` for use
@@ -29,7 +28,7 @@ class PcwaheedprojectStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         lambda_role= self.create_lambda_role()
-        hw_lambda = self.create_lambda("lambda", "./resources", "webhealthmonitor.lambda_handler", lambda_role)
+        hw_lambda = self.create_lambda('lambda', './resources', 'webhealthmonitor.lambda_handler', lambda_role)
         #2 db_lambda = self.create_lambda("DynamoDBLambda", "./resources", dynamodb_lambda.lambda_handler, lambda_role)
         lambda_schedule= events_.Schedule.rate(cdk.Duration.minutes(1))
         lambda_target=targets_.LambdaFunction(handler=hw_lambda)
@@ -48,7 +47,7 @@ class PcwaheedprojectStack(cdk.Stack):
         #2topic.add_subscription(subscription_.LambdaSubscription(fn=db_lambda))
         
         
-        dimension={'URL' :constants.URL_TO_MONITOR}
+        dimension={'URL' : constants.URL_TO_MONITOR}
         availability_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
                                                 metric_name= constants.URL_MONIROR_NAME_AVAILABILITY,
                                                 dimensions_map=dimension,
