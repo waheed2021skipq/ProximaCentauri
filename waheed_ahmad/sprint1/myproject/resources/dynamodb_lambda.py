@@ -1,45 +1,41 @@
-def lambda_handler(events,context):
-        db= boto3.resource('dynamodb')
-        
-        
-        
-        
-        
-        # msg = events[''][0]['sns']
-        # time = events[''][0]['sns']['time.datetime.timestamp']
-        # reasontoalarm= events['record'][0]['sns']
-        
-        
-        
-    
-        # table = db.create_table(
-        #     TableName='alarmtable',
-        #     KeySchema=[
-        #         {
-        #             'AttributeName': 'alarmID',
-        #             'KeyType': 'HASH'  
-        #         },
-        #         {
-        #             'AttributeName': 'alarm',
-        #             'KeyType': 'RANGE'  
-        #         }
-        #         ],
-        #     AttributeDefinitions=[
-        #         {
-        #             'AttributeName': 'alarmID',
-        #             'AttributeType': 'N'
-        #         },
-        #         {
-        #             'AttributeName': 'Alarmtitle',
-        #             'AttributeType': 'S'
-        #         },
+import boto3
+from Dynamo_db import put_data_in_db
 
-        #                         ],
-        #     ProvisionedThroughput={
-        #         'ReadCapacityUnits': 10,
-        #         'WriteCapacityUnits': 10
-        #     }
-        # return table
-        # )     
-        
-        #db.table.grant_read_write_data(db_lambda)
+
+def lambda_database_function(event , context):
+    
+    client = boto3.client('dynamodb')
+    table='alarmtable'
+    existing_tables = client.list_tables()["TableNames"]
+    if table not in existing_tables:
+        response = client.create_table(
+            AttributeDefinitions=[
+            {
+                'AttributeName': 'alarmID',
+                'AttributeType': 'String'
+            },
+            {
+                'AttributeName': 'key',
+                'AttributeType': 'String'
+            },
+        ],
+         TableName=table,
+         KeySchema=[
+            {
+                'AttributeName': 'alarmID',
+                'KeyType': 'HASH'
+            },
+            {
+                'AttributeName': 'key',
+                'KeyType': 'RANGE'
+            }
+        ],
+         BillingMode='PAY_PER_REQUEST'
+        )
+        response="Table Created"
+    else:
+        timestamp= str(event["Records"][0]["Sns"]["Timestamp"])
+        message= str(event["Records"][0]["Sns"]["Message"])
+        print(message , timestamp , table)
+        response=put_data_in_db(timestamp,message,table)
+    return
