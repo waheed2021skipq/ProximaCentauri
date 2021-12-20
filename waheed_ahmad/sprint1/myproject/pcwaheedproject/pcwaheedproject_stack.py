@@ -8,14 +8,11 @@ from aws_cdk import (
     aws_sns as sns,
     aws_sns_subscriptions as subscriptions_,
     aws_cloudwatch_actions as actions_,
-    aws_dynamodb as db
+    aws_dynamodb as db,
+    aws_s3 as s3
 )
 
-# For consistency with other languages, `cdk` is the preferred import name for
-# the CDK's core module.  The following line also imports it as `core` for use
-# with examples from the CDK Developer's Guide, which are in the process of
-# being updated to use `cdk`.  You may delete this import if you don't need it.
-#
+
 from aws_cdk import core
 
 URL_TO_MONITOR='www.twitter.com'
@@ -33,7 +30,7 @@ class PcwaheedprojectStack(cdk.Stack):
 
         lambda_role= self.create_lambda_role()
         hw_lambda = self.create_lambda('lambda', './resources', 'webhealthmonitor.lambda_handler', lambda_role)
-        #2db_lambda = self.create_lambda("DynamoDBLambda", "./resources", dynamodb_lambda.lambda_handler, lambda_role)
+        #db_lambda = self.create_lambda("DynamoDBLambda", "./resources", dynamodb_lambda.lambda_handler, lambda_role)
         lambda_schedule= events_.Schedule.rate(cdk.Duration.minutes(1))
         lambda_target=targets_.LambdaFunction(handler=hw_lambda)
         rule= events_.Rule(self, "webHealth_invoke", 
@@ -42,16 +39,44 @@ class PcwaheedprojectStack(cdk.Stack):
                             schedule= lambda_schedule,
                             targets= [lambda_target]) #remeber the braces, i spent so much time to figure out this error, cz this is treateda as array
         #2 create table here 
-        #2dynamo_table=self.create_table()
+
+        # table = db.create_table(
+        #     TableName='alarmtable',
+        #     KeySchema=[
+        #         {
+        #             'AttributeName': 'alarmID',
+        #             'KeyType': 'HASH'  
+        #         },
+        #         {
+        #             'AttributeName': 'alarm',
+        #             'KeyType': 'RANGE'  
+        #         }
+        #         ],
+        #     AttributeDefinitions=[
+        #         {
+        #             'AttributeName': 'alarmID',
+        #             'AttributeType': 'N'
+        #         },
+        #         {
+        #             'AttributeName': 'Alarmtitle',
+        #             'AttributeType': 'S'
+        #         },
+
+        #                         ],
+        #     ProvisionedThroughput={
+        #         'ReadCapacityUnits': 10,
+        #         'WriteCapacityUnits': 10
+        #     }
+        # return table
+        # )     
+        
+        #db.table.grant_read_write_data(db_lambda)
         #####also provide full read write access to table
         
         #####module code for sending sns notifications########################################################
         topic =sns.Topic(self, "webhealth")
         topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
         #topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
-        # import sys 
-        # sys.path.insert('', '/ProximaCentauri/waheed_ahmad/sprint1/pcwaheedproject/resources')
-        # import constants as constants
         
         dimension={'URL' :URL_TO_MONITOR}
         availability_metric=cloudwatch_.Metric(namespace=URL_MONITOR_NAMESPACE, 
@@ -79,7 +104,7 @@ class PcwaheedprojectStack(cdk.Stack):
 			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD , 
 			datapoints_to_alarm=1, 
 			evaluation_periods=1,
-		 	threshold=0.2 )
+		 	threshold=0.25 )
     
     ###########link the alarm to subscription
         availability_alarm.add_alarm_action(actions_.SnsAction(topic))
@@ -103,5 +128,13 @@ class PcwaheedprojectStack(cdk.Stack):
         role=role
 )
 
-    #2def create_table():
+    #2def create_table(self.id, tablel_name,key):
+        # {
+        #     db.putit
+        #     {
+        #         alarmID= ''
+        # }
+        
+    #    
+    
      #2   return db.Table
