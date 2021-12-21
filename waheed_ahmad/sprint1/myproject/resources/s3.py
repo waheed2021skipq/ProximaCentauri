@@ -1,9 +1,13 @@
-# import boto3
-# import json
+import boto3
+
+s3 = boto3.client('s3')
+s3.create_bucket(Bucket='waheedbucket')
 
 
-# s3buk = boto3.client('s3buk')
+# Create a client
+s3 = boto3.client('s3')
 
-# def lambda_handler(events,context):
-    
-#     bukk= 'mybucket'
+filename = 'urlfile.txt'
+bucket_name = 'waheedbucket'
+
+s3.upload_file(filename, bucket_name, filename)
