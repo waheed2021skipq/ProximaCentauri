@@ -1,3 +1,4 @@
+#importing all required libraries
 from aws_cdk import (
     core as cdk,
     aws_lambda as lambda_,
@@ -14,7 +15,7 @@ from aws_cdk import (
 
 
 from aws_cdk import core
-
+#this can be defined in a seperate constant file for modularity
 URL_TO_MONITOR='www.twitter.com'
 URL_MONITOR_NAMESPACE="waheedwebhealth"
 URL_MONIROR_NAME_AVAILABILITY= "url_availability"
@@ -75,8 +76,8 @@ class PcwaheedprojectStack(cdk.Stack):
         
         #####module code for sending sns notifications########################################################
         topic =sns.Topic(self, "webhealth")
-        topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
-        #topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
+        topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org')) #subcription to my email address
+        #topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda)) #subsription to db lambda
         
         dimension={'URL' :URL_TO_MONITOR}
         availability_metric=cloudwatch_.Metric(namespace=URL_MONITOR_NAMESPACE, 
