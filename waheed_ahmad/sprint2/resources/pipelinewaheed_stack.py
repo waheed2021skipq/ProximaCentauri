@@ -29,11 +29,13 @@ class waheedsprint(cdk.Stack):
             "npm install -g aws-cdk",
             "cdk synth"
             ],
-            primary_output_directory= "waheed_ahmad/sprint2")
+            primary_output_directory= "waheed_ahmad/sprint2/resources/cdk.out")
             
+        
+                                          
             
-            
-        pipeline = pipelines.CodePipeline(self, "waheedMyFirstPipeline", synth= synth)
+        pipeline = pipelines.CodePipeline(self, "waheedMyFirstPipeline",synth = synth,
+                                          self_mutation = True)
         #this is beta stage of CI/cD    
         beta= ProductionStage(self,'beta',env={
             'account':'315997497220',
