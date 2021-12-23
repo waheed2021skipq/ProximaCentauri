@@ -16,7 +16,6 @@ class waheedsprint(cdk.Stack):
 
         
         source= pipelines.CodePipelineSource.git_hub(repo_string ='waheed2021skipq/ProximaCentauri',
-        branch= 'master',
         authentication =core.SecretValue.secrets_manager('github-oauthwaheedtokeneast'),
         trigger=cpactions.GitHubTrigger.POLL
         )
