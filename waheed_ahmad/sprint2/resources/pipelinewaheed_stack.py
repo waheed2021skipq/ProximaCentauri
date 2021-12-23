@@ -32,7 +32,7 @@ class waheedsprint(cdk.Stack):
             
             
             
-        pipeline = pipelines.CodePipeline(self, "MyFirstPipeline", synth= synth)
+        pipeline = pipelines.CodePipeline(self, "waheedMyFirstPipeline", synth= synth)
             
         beta= ProductionStage(self,'beta',env={
             'account':'315997497220',
