@@ -49,5 +49,5 @@ class waheedsprint(cdk.Stack):
         #     'region':'us-east-2'
         # })
         
-        pipeline.add_stage(beta)
+        # pipeline.add_stage(beta)
 
