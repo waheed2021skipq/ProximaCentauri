@@ -16,6 +16,7 @@ class waheedsprint(cdk.Stack):
 
         
         source= pipelines.CodePipelineSource.git_hub(repo_string ='waheed2021skipq/ProximaCentauri',
+        branch= 'main',
         authentication =core.SecretValue.secrets_manager('github-oauthwaheedtokeneast'),
         trigger=cpactions.GitHubTrigger.POLL
         )
@@ -24,7 +25,6 @@ class waheedsprint(cdk.Stack):
         synth= pipelines.ShellStep('synth', input= source,
         commands=[
             "cd waheed_ahmad/sprint2" , 
-            "python -m pip install -r requirements_aws.txt" ,
             "python -m pip install -r requirements.txt"
             ],
             primary_output_directory= "waheed_ahmad/sprint2/cdk.out")
