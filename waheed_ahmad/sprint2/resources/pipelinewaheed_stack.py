@@ -27,7 +27,7 @@ class waheedsprint(cdk.Stack):
             "cd waheed_ahmad/sprint2" , 
             "python -m pip install -r requirements.txt"
             ],
-            primary_output_directory= "waheed_ahmad/sprint2/cdk.out")
+            primary_output_directory= "waheed_ahmad/sprint2")
             
             
             
