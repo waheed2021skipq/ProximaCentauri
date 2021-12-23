@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-
 from aws_cdk import core as cdk
 
 

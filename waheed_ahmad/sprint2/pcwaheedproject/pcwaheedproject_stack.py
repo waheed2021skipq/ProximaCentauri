@@ -7,10 +7,10 @@ from aws_cdk import (
     aws_cloudwatch as cloudwatch_,
     aws_sns as sns,
     aws_sns_subscriptions as subscriptions_,
-    aws_cloudwatch_actions as actions_,
-    aws_dynamodb as db,
-    aws_s3 as s3,
-    aws_sqs as sqs,
+    #aws_cloudwatch_actions as actions_,
+    #aws_dynamodb as db,
+    #aws_s3 as s3,
+    #aws_sqs as sqs,
     #aws_s3_notifications as s3n
 )
 
@@ -71,19 +71,19 @@ class PcwaheedprojectStack(cdk.Stack):
         #     }
         # return table
         # ) 
-        waheedbucket= s3.Bucket(self, "waheedbkt")
+        # waheedbucket= s3.Bucket(self, "waheedbkt")
     
-        queue = sqs.Queue(self, 'buckQ',
-        visibility_timeout=cdk.Duration.seconds(300) ) 
+        # queue = sqs.Queue(self, 'buckQ',
+        # visibility_timeout=cdk.Duration.seconds(300) ) 
         #waheedbucket.add_event_notification( s3.EventType.OBJECT_CREATED, s3n.SqsDestination(queue) )
         
         #db.table.grant_read_write_data(db_lambda)
         #####also provide full read write access to table
         
         #####module code for sending sns notifications########################################################
-        topic =sns.Topic(self, "webhealthmonitor")
-        topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
-        topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
+        # topic =sns.Topic(self, "webhealthmonitor")
+        # topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
+        # topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
         
         dimension={'URL' :URL_TO_MONITOR}
         availability_metric=cloudwatch_.Metric(namespace=URL_MONITOR_NAMESPACE, 
@@ -114,8 +114,8 @@ class PcwaheedprojectStack(cdk.Stack):
 		 	threshold=0.25 )
     
     ###########link the alarm to subscription
-        availability_alarm.add_alarm_action(actions_.SnsAction(topic))
-        latency_alarm.add_alarm_action(actions_.SnsAction(topic))
+        # availability_alarm.add_alarm_action(actions_.SnsAction(topic))
+        # latency_alarm.add_alarm_action(actions_.SnsAction(topic))
     
     
     def create_lambda_role(self):
@@ -135,10 +135,10 @@ class PcwaheedprojectStack(cdk.Stack):
         role=role
 )
 
-    def create_table(self):
-        return db.Table(self,
-        id="Table", 
-        table_name="alarmtable",
-        partition_key=db.Attribute(name="alarmID", type=db.AttributeType.STRING), 
+    # def create_table(self):
+    #     return db.Table(self,
+    #     id="Table", 
+    #     table_name="alarmtable",
+    #     partition_key=db.Attribute(name="alarmID", type=db.AttributeType.STRING), 
         
-        sort_key=db.Attribute(name="key", type=db.AttributeType.STRING))
+    #     sort_key=db.Attribute(name="key", type=db.AttributeType.STRING))
