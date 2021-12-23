@@ -26,7 +26,8 @@ class waheedsprint(cdk.Stack):
         commands=[
             "cd waheed_ahmad/sprint2" , 
             "python -m pip install -r requirements.txt"
-            "python -m pip install -r requirements-dev.txt"
+            "npm install -g aws-cdk",
+            "cdk synth"
             ],
             primary_output_directory= "waheed_ahmad/sprint2")
             
