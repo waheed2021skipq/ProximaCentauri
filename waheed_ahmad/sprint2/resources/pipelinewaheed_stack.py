@@ -24,11 +24,11 @@ class waheedsprint(cdk.Stack):
         
         synth= pipelines.ShellStep('synth', input= source,
         commands=[
-            "cd /waheed_ahmad/sprint2" , 
+            "cd waheed_ahmad/sprint2" , 
             "python -m pip install -r requirements_aws.txt" ,
             "python -m pip install -r requirements.txt"
             ],
-            primary_output_directory= "/waheed_ahmad/sprint2/cdk.out")
+            primary_output_directory= "waheed_ahmad/sprint2/cdk.out")
             
             
             
