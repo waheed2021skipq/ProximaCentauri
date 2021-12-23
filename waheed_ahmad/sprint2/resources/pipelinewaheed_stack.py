@@ -24,20 +24,20 @@ class waheedsprint(cdk.Stack):
         
         synth= pipelines.ShellStep('synth', input= source,
         commands=[
-            "cd ProximaCentauri/waheed_ahmad/sprint2" , 
+            "cd /waheed_ahmad/sprint2" , 
             "python -m pip install -r requirements_aws.txt" ,
             "python -m pip install -r requirements.txt"
             ],
-            primary_output_directory= "ProximaCentauri/waheed_ahmad/sprint2/cdk.out")
+            primary_output_directory= "/waheed_ahmad/sprint2/cdk.out")
             
             
             
         pipeline = pipelines.CodePipeline(self, "waheedMyFirstPipeline", synth= synth)
         #this is beta stage of CI/cD    
-        beta= ProductionStage(self,'beta',env={
-            'account':'315997497220',
-            'region':'us-east-2'
-        })
+        # beta= ProductionStage(self,'beta',env={
+        #     'account':'315997497220',
+        #     'region':'us-east-2'
+        # })
         
         #add tests stages here
         
@@ -46,5 +46,5 @@ class waheedsprint(cdk.Stack):
         #     'region':'us-east-2'
         # })
         
-        pipeline.add_stage(beta)
+        #pipeline.add_stage(beta)
 
