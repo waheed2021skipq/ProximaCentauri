@@ -72,14 +72,14 @@ set up an environment with your required specifications and get started with aws
   ```
  * aws latest version
  * for linux
-  ```curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
+  ```curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" <br>
+unzip awscliv2.zip <br>
 sudo ./aws/install
   ```
- * for windows
+* for windows
     ``` msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
     ```
- * Python latest version
+* Python latest version
   ``` python --version
   ```
 ### Installation
