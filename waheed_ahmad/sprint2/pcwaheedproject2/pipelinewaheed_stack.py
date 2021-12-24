@@ -24,12 +24,8 @@ class waheedsprint(cdk.Stack):
         
         synth= pipelines.ShellStep('synth', input= source,
         commands=[
-            "cd waheed_ahmad/sprint2" , 
-<<<<<<< HEAD:waheed_ahmad/sprint2/pcwaheedproject2/pipelinewaheed_stack.py
+            "cd waheed_ahmad/sprint2" ,
             "python -m pip install -r requirements.txt", 
-=======
-            "python -m pip install -r requirements.txt",
->>>>>>> 513f6767ed388e94ed2baa9a16b55b6f28c8fe3d:waheed_ahmad/sprint2/resources/pipelinewaheed_stack.py
             "npm install -g aws-cdk",
             "cdk synth"
             ],
