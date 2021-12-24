@@ -85,7 +85,7 @@ sudo ./aws/install
   ```
 ### Installation
 
-*1. goto aws.amazon.com
+```1. goto aws.amazon.com
 *2. Clone the repo
    ```sh
    git clone 'your repo '
@@ -104,7 +104,7 @@ sudo ./aws/install
 *7. Use cdk deploy 'name' to deploy the pipeline
   
 ## Note
-Always git push to make the changes work through pipeline
+Always git push to make the changes work through pipeline```
 
 
 
