@@ -1,0 +1,34 @@
+{
+  "version": "15.0.0",
+  "files": {
+    "50c5925440f8836bcd5cb1c295e9b99854e2ce551d9d782c40ea46056696d204": {
+      "source": {
+        "path": "../asset.50c5925440f8836bcd5cb1c295e9b99854e2ce551d9d782c40ea46056696d204",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "315997497220-us-east-2": {
+          "bucketName": "cdk-waheed11-assets-315997497220-us-east-2",
+          "objectKey": "50c5925440f8836bcd5cb1c295e9b99854e2ce551d9d782c40ea46056696d204.zip",
+          "region": "us-east-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::315997497220:role/cdk-waheed11-file-publishing-role-315997497220-us-east-2"
+        }
+      }
+    },
+    "52bf41a72762e267bc4c485a2b05f9e1a2af7f896b70b97cfac0a865b38bced3": {
+      "source": {
+        "path": "waheedsprintbetawaheedstack5FBEE6E9.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "315997497220-us-east-2": {
+          "bucketName": "cdk-waheed11-assets-315997497220-us-east-2",
+          "objectKey": "52bf41a72762e267bc4c485a2b05f9e1a2af7f896b70b97cfac0a865b38bced3.json",
+          "region": "us-east-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::315997497220:role/cdk-waheed11-file-publishing-role-315997497220-us-east-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

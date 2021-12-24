@@ -29,7 +29,7 @@ class waheedsprint(cdk.Stack):
             "npm install -g aws-cdk",
             "cdk synth"
             ],
-            primary_output_directory= "waheed_ahmad/sprint2")
+            primary_output_directory= "waheed_ahmad/sprint2/cdk.out")
             
         
                                           
