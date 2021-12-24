@@ -76,35 +76,35 @@ set up an environment with your required specifications and get started with aws
 unzip awscliv2.zip
 sudo ./aws/install
   ```
-  for windows
+ * for windows
     ```msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
-  ```
+    ```
   
 * python latest version
   ```python --version
   ```
 ### Installation
 
-```1. goto aws.amazon.com
-*2. Clone the repo
+1. goto aws.amazon.com
+2. Clone the repo
    ```sh
    git clone 'your repo '
    ```
-*3. Install NPM packages
+3. Install NPM packages
    ```sh
    npm install
    ```
-*4. Create pipelinestack_py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html" as reference
+4. Create pipelinestack_py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html" as reference
  
-*5. Add testing (unit,integrations) by following reference "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html"
+5. Add testing (unit,integrations) by following reference "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html"
 
-*6.  use this command to bootsrap your pipeline
+6.  use this command to bootsrap your pipeline
 "cdk bootstrap --qualifier <name> --toolkit-stack-name <somename>"
   
-*7. Use cdk deploy 'name' to deploy the pipeline
+7. Use cdk deploy 'name' to deploy the pipeline
   
 ## Note
-Always git push to make the changes work through pipeline```
+Always git push to make the changes work through pipeline
 
 
 
