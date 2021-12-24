@@ -94,14 +94,16 @@ sudo ./aws/install
    ```sh
    npm install
    ```
-4. Create pipelinestack_py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html" as reference
+4. Create pipelinestack
+  ```py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html" as reference```
  
-5. Add testing (unit,integrations) by following reference "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html"
+5. Add testing 
+  ```add testing (unit,integrations) by following reference "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html"```
 
 6.  use this command to bootsrap your pipeline
-"cdk bootstrap --qualifier <name> --toolkit-stack-name <somename>"
+  ```"cdk bootstrap --qualifier <name> --toolkit-stack-name <somename>"```
   
-7. Use cdk deploy 'name' to deploy the pipeline
+7. ``` Use cdk deploy 'name' to deploy the pipeline```
   
 ## Note
 Always git push to make the changes work through pipeline
