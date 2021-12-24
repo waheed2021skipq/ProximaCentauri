@@ -358,7 +358,7 @@
                                   "ProjectName": {
                                     "Ref": "waheedMyFirstPipelineBuildsynthCdkBuildProjectC3321FAF"
                                   },
-                                  "EnvironmentVariables": "[{\"name\":\"_PROJECT_CONFIG_HASH\",\"type\":\"PLAINTEXT\",\"value\":\"1aedb4add506e07b88317f608d979bab015fba1a5f876d1ac37979b7dbc0c31f\"}]"
+                                  "EnvironmentVariables": "[{\"name\":\"_PROJECT_CONFIG_HASH\",\"type\":\"PLAINTEXT\",\"value\":\"e1cada0ac157aa185513cb898f6ecac9be5debe87c3fc24cc775fd1bd338d574\"}]"
                                 },
                                 "runOrder": 1,
                                 "roleArn": {
@@ -749,7 +749,7 @@
                                     },
                                     "source": {
                                       "type": "CODEPIPELINE",
-                                      "buildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"build\": {\n      \"commands\": [\n        \"cd waheed_ahmad/sprint2\",\n        \"python -m pip install -r requirements.txt\",\n        \"npm install -g aws-cdk\",\n        \"cdk synth\"\n      ]\n    }\n  },\n  \"artifacts\": {\n    \"base-directory\": \"waheed_ahmad/sprint2\",\n    \"files\": \"**/*\"\n  }\n}"
+                                      "buildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"build\": {\n      \"commands\": [\n        \"cd waheed_ahmad/sprint2\",\n        \"python -m pip install -r requirements.txt\",\n        \"npm install -g aws-cdk\",\n        \"cdk synth\"\n      ]\n    }\n  },\n  \"artifacts\": {\n    \"base-directory\": \"waheed_ahmad/sprint2/cdk.out\",\n    \"files\": \"**/*\"\n  }\n}"
                                     },
                                     "encryptionKey": "alias/aws/s3"
                                   }
