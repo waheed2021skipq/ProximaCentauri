@@ -91,13 +91,13 @@ class PcwaheedprojectStack(cdk.Stack):
                                                 dimensions_map=dimension,
                                                 period=cdk.Duration.minutes(1),
                                                 label= 'Availability Metric')
-        availability_alarm= cloudwatch_.Alarm(self, 
-			id='AvailabilityAlarm',
-			metric= availability_metric , 
-			comparison_operator= cloudwatch_.ComparisonOperator.LESS_THAN_THRESHOLD  , 
-			datapoints_to_alarm=1, 
-			evaluation_periods=1,
-		 	threshold=1)    
+#         availability_alarm= cloudwatch_.Alarm(self, 
+# 			id='AvailabilityAlarm',
+# 			metric= availability_metric , 
+# 			comparison_operator= cloudwatch_.ComparisonOperator.LESS_THAN_THRESHOLD  , 
+# 			datapoints_to_alarm=1, 
+# 			evaluation_periods=1,
+# 		 	threshold=1)    
     
         dimension={'URL':URL_TO_MONITOR}
         latency_metric=cloudwatch_.Metric(namespace=URL_MONITOR_NAMESPACE, 
@@ -105,13 +105,13 @@ class PcwaheedprojectStack(cdk.Stack):
                                          dimensions_map=dimension,
                                          period=cdk.Duration.minutes(1),
                                          label= 'latency Metric' )
-        latency_alarm= cloudwatch_.Alarm(self, 
-			id='LatencyAlarm',
-			metric= latency_metric , 
-			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD , 
-			datapoints_to_alarm=1, 
-			evaluation_periods=1,
-		 	threshold=0.25 )
+#         latency_alarm= cloudwatch_.Alarm(self, 
+# 			id='LatencyAlarm',
+# 			metric= latency_metric , 
+# 			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD , 
+# 			datapoints_to_alarm=1, 
+# 			evaluation_periods=1,
+# 		 	threshold=0.25 )
     
     ###########link the alarm to subscription
         # availability_alarm.add_alarm_action(actions_.SnsAction(topic))
