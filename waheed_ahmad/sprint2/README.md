@@ -112,8 +112,7 @@ Always git push to make the changes work through pipeline
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-This project can be used to monitor the health of website which includes availability and latency of a given website , which
-will also notify the subscriper in case a certain threshold is reached 
+Pipeline automates the build, test, and deploy phases of your release process every time there is a code change, AWS CodePipeline is a continuous delivery service you can use to model, visualize, and automate the steps required to release your software. You can quickly model and configure the different stages of a software release process. CodePipeline automates the steps required to release your software changes continuously. For information about pricing for CodePipeline
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
