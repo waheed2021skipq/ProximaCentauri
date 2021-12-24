@@ -3,7 +3,7 @@
 <h3 align="center">Sprint2 project skipq</h3>
 
   <p align="center">
-    This project is to create multi stage pipeline having beta/gamma and production stages
+    This project is to create multi stage pipeline having beta/gamma and production stages , integrate unit testing and integration stages , and finally add a manual approval step
     <br />
 
   </p>
@@ -41,7 +41,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
+In this project we are deploying a pipeline that will automate the code deploy and test step Code Pipeline automates the build, test, and deploy phases of your release process every time there is a code change, based on the release model you define. This enables you to deliver features and updates rapidly and reliably.
  `waheed2021skipq`, `ProximaCentauri`
 
 
@@ -59,7 +59,8 @@
 ## Getting Started
 
 You need to goto amazon aws webiste 'https://aws.amazon.com/' and sign up with a IAM user account, 
-set up an environment with your required specifications and get started with aws command line interface
+set up an environment with your required specifications and get started with aws command line interface.
+
 
 
 ### Prerequisites
@@ -93,7 +94,17 @@ sudo ./aws/install
    ```sh
    npm install
    ```
-4. Use cli and python code for desired tasked
+4. Create pipelinestack_py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html" as reference
+ 
+5. Add testing (unit,integrations) by following reference "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html"
+
+6.  use this command to bootsrap your pipeline
+"cdk bootstrap --qualifier <name> --toolkit-stack-name <somename>"
+  
+7. Use cdk deploy 'name' to deploy the pipeline
+  
+## Note
+Always git push to make the changes work through pipeline
 
 
 
@@ -110,10 +121,12 @@ will also notify the subscriper in case a certain threshold is reached
 <!-- ROADMAP -->
 ## Roadmap
 
-- [] health monitor
-- [] alarm
-- [] SNS
-    - [] Lambda sns
+- [] Simple pipeline
+- [] Added beta stage
+- [] Testing stages
+    - [] Unit testing
+    - [] Integration testing
+- [] Manual approval step
 
 
 
