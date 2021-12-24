@@ -5,7 +5,7 @@ from aws_cdk import core
 from aws_cdk import aws_codepipeline as codepipeline
 from aws_cdk import aws_codepipeline_actions as cpactions
 from aws_cdk import pipelines
-from resources.pipelinewaheed_stage import ProductionStage
+from pcwaheedproject2.pipelinewaheed_stage import ProductionStage
 
 class waheedsprint(cdk.Stack):
 
@@ -44,10 +44,10 @@ class waheedsprint(cdk.Stack):
         
         #add tests stages here
         
-        #  beta= ProductionStage(self,'beta',env={
+        # beta= ProductionStage(self,'beta',env={
         #     'account':'315997497220',
         #     'region':'us-east-2'
         # })
         
-        # pipeline.add_stage(beta)
+        pipeline.add_stage(beta)
 

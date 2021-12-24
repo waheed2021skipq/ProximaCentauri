@@ -9,7 +9,7 @@ from aws_cdk import core as cdk
 # being updated to use `cdk`.  You may delete this import if you don't need it.
 from aws_cdk import core
 
-from resources.pipelinewaheed_stack import waheedsprint
+from pcwaheedproject2.pipelinewaheed_stack import waheedsprint
 #from pcwaheedproject.pcwaheedproject_stack import PcwaheedprojectStack
 
 

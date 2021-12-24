@@ -3,7 +3,7 @@ from aws_cdk import core
 from aws_cdk import aws_codepipeline as codepipeline
 from aws_cdk import aws_codepipeline_actions as cpactions
 from aws_cdk import pipelines
-from pcwaheedproject.pcwaheedproject_stack import PcwaheedprojectStack
+from pcwaheedproject2.pcwaheedproject2_stack import PcwaheedprojectStack
 
 class ProductionStage(core.Stage):
 
