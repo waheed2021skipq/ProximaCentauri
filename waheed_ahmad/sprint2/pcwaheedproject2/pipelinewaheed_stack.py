@@ -54,8 +54,8 @@ class waheedsprint(cdk.Stack):
         #     'region':'us-east-2'
         # })
         unit_test=pipelines.ShellStep('unit_test',
-            commands=[ "cd talha/sprint2",
-                    "pip install -r requirements.txt", 
+            commands=[ "cd waheed_ahmad/sprint2",
+                    "pip install -r requirements.txt",
                     "pytest unittests",  "pytest integtest"]    )
         
         pipeline.add_stage(beta, pre= [unit_test])

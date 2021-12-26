@@ -177,6 +177,16 @@
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
               "Resource": {
+                "Fn::GetAtt": [
+                  "waheedMyFirstPipelinebetaunittestCodePipelineActionRoleFF2C5145",
+                  "Arn"
+                ]
+              }
+            },
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": {
                 "Fn::Join": [
                   "",
                   [
@@ -344,6 +354,32 @@
             "Actions": [
               {
                 "ActionTypeId": {
+                  "Category": "Build",
+                  "Owner": "AWS",
+                  "Provider": "CodeBuild",
+                  "Version": "1"
+                },
+                "Configuration": {
+                  "ProjectName": {
+                    "Ref": "waheedMyFirstPipelinebetaunittest3DC08E7A"
+                  }
+                },
+                "InputArtifacts": [
+                  {
+                    "Name": "waheed2021skipq_ProximaCentauri_Source"
+                  }
+                ],
+                "Name": "unit_test",
+                "RoleArn": {
+                  "Fn::GetAtt": [
+                    "waheedMyFirstPipelinebetaunittestCodePipelineActionRoleFF2C5145",
+                    "Arn"
+                  ]
+                },
+                "RunOrder": 1
+              },
+              {
+                "ActionTypeId": {
                   "Category": "Deploy",
                   "Owner": "AWS",
                   "Provider": "CloudFormation",
@@ -373,34 +409,7 @@
                     "Name": "synth_Output"
                   }
                 ],
-                "Name": "Prepare",
-                "RoleArn": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":iam::315997497220:role/cdk-waheed11-deploy-role-315997497220-us-east-2"
-                    ]
-                  ]
-                },
-                "RunOrder": 1
-              },
-              {
-                "ActionTypeId": {
-                  "Category": "Deploy",
-                  "Owner": "AWS",
-                  "Provider": "CloudFormation",
-                  "Version": "1"
-                },
-                "Configuration": {
-                  "StackName": "beta-waheedstack",
-                  "ActionMode": "CHANGE_SET_EXECUTE",
-                  "ChangeSetName": "PipelineChange"
-                },
-                "Name": "Deploy",
+                "Name": "waheedstack.Prepare",
                 "RoleArn": {
                   "Fn::Join": [
                     "",
@@ -414,6 +423,33 @@
                   ]
                 },
                 "RunOrder": 2
+              },
+              {
+                "ActionTypeId": {
+                  "Category": "Deploy",
+                  "Owner": "AWS",
+                  "Provider": "CloudFormation",
+                  "Version": "1"
+                },
+                "Configuration": {
+                  "StackName": "beta-waheedstack",
+                  "ActionMode": "CHANGE_SET_EXECUTE",
+                  "ChangeSetName": "PipelineChange"
+                },
+                "Name": "waheedstack.Deploy",
+                "RoleArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::315997497220:role/cdk-waheed11-deploy-role-315997497220-us-east-2"
+                    ]
+                  ]
+                },
+                "RunOrder": 3
               }
             ],
             "Name": "beta"
@@ -793,6 +829,235 @@
       },
       "Metadata": {
         "aws:cdk:path": "waheedsprint/waheedMyFirstPipeline/Pipeline/Assets/FileAsset1/CodePipelineActionRole/DefaultPolicy/Resource"
+      }
+    },
+    "waheedMyFirstPipelinebetaunittestRoleEC571EEC": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "codebuild.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "waheedsprint/waheedMyFirstPipeline/Pipeline/beta/unit_test/unit_test/Role/Resource"
+      }
+    },
+    "waheedMyFirstPipelinebetaunittestRoleDefaultPolicy6E389B35": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":logs:us-east-2:315997497220:log-group:/aws/codebuild/",
+                      {
+                        "Ref": "waheedMyFirstPipelinebetaunittest3DC08E7A"
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":logs:us-east-2:315997497220:log-group:/aws/codebuild/",
+                      {
+                        "Ref": "waheedMyFirstPipelinebetaunittest3DC08E7A"
+                      },
+                      ":*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": [
+                "codebuild:CreateReportGroup",
+                "codebuild:CreateReport",
+                "codebuild:UpdateReport",
+                "codebuild:BatchPutTestCases",
+                "codebuild:BatchPutCodeCoverages"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":codebuild:us-east-2:315997497220:report-group/",
+                    {
+                      "Ref": "waheedMyFirstPipelinebetaunittest3DC08E7A"
+                    },
+                    "-*"
+                  ]
+                ]
+              }
+            },
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "waheedMyFirstPipelineArtifactsBucket9EFCD9E0",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "waheedMyFirstPipelineArtifactsBucket9EFCD9E0",
+                          "Arn"
+                        ]
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "waheedMyFirstPipelinebetaunittestRoleDefaultPolicy6E389B35",
+        "Roles": [
+          {
+            "Ref": "waheedMyFirstPipelinebetaunittestRoleEC571EEC"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "waheedsprint/waheedMyFirstPipeline/Pipeline/beta/unit_test/unit_test/Role/DefaultPolicy/Resource"
+      }
+    },
+    "waheedMyFirstPipelinebetaunittest3DC08E7A": {
+      "Type": "AWS::CodeBuild::Project",
+      "Properties": {
+        "Artifacts": {
+          "Type": "CODEPIPELINE"
+        },
+        "Environment": {
+          "ComputeType": "BUILD_GENERAL1_SMALL",
+          "Image": "aws/codebuild/standard:5.0",
+          "ImagePullCredentialsType": "CODEBUILD",
+          "PrivilegedMode": false,
+          "Type": "LINUX_CONTAINER"
+        },
+        "ServiceRole": {
+          "Fn::GetAtt": [
+            "waheedMyFirstPipelinebetaunittestRoleEC571EEC",
+            "Arn"
+          ]
+        },
+        "Source": {
+          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"build\": {\n      \"commands\": [\n        \"cd waheed_ahmad/sprint2\",\n        \"pip install -r requirements.txt\",\n        \"pytest unittests\",\n        \"pytest integtest\"\n      ]\n    }\n  }\n}",
+          "Type": "CODEPIPELINE"
+        },
+        "EncryptionKey": "alias/aws/s3"
+      },
+      "Metadata": {
+        "aws:cdk:path": "waheedsprint/waheedMyFirstPipeline/Pipeline/beta/unit_test/unit_test/Resource"
+      }
+    },
+    "waheedMyFirstPipelinebetaunittestCodePipelineActionRoleFF2C5145": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::315997497220:root"
+                    ]
+                  ]
+                }
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "waheedsprint/waheedMyFirstPipeline/Pipeline/beta/unit_test/CodePipelineActionRole/Resource"
+      }
+    },
+    "waheedMyFirstPipelinebetaunittestCodePipelineActionRoleDefaultPolicy87087133": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "codebuild:BatchGetBuilds",
+                "codebuild:StartBuild",
+                "codebuild:StopBuild"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "waheedMyFirstPipelinebetaunittest3DC08E7A",
+                  "Arn"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "waheedMyFirstPipelinebetaunittestCodePipelineActionRoleDefaultPolicy87087133",
+        "Roles": [
+          {
+            "Ref": "waheedMyFirstPipelinebetaunittestCodePipelineActionRoleFF2C5145"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "waheedsprint/waheedMyFirstPipeline/Pipeline/beta/unit_test/CodePipelineActionRole/DefaultPolicy/Resource"
       }
     },
     "waheedMyFirstPipelineUpdatePipelineSelfMutationRole1356833A": {
