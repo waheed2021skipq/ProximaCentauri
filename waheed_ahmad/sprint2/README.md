@@ -3,7 +3,7 @@
 <h3 align="center">Sprint2 project skipq</h3>
 
   <p align="center">
-    This project is to create multi stage pipeline having beta/gamma and production stages
+    This project is to create multi stage pipeline having beta/gamma and production stages , integrate unit testing and integration stages , and finally add a manual approval step
     <br />
 
   </p>
@@ -41,7 +41,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
+In this project we are deploying a pipeline that will automate the code deploy and test step Code Pipeline automates the build, test, and deploy phases of your release process every time there is a code change, based on the release model you define. This enables you to deliver features and updates rapidly and reliably.
  `waheed2021skipq`, `ProximaCentauri`
 
 
@@ -59,7 +59,8 @@
 ## Getting Started
 
 You need to goto amazon aws webiste 'https://aws.amazon.com/' and sign up with a IAM user account, 
-set up an environment with your required specifications and get started with aws command line interface
+set up an environment with your required specifications and get started with aws command line interface.
+
 
 
 ### Prerequisites
@@ -71,29 +72,54 @@ set up an environment with your required specifications and get started with aws
   ```
  * aws latest version
  * for linux
-  ```curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  ```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
   ```
-  for windows
-    ```msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
-  ```
-  
-* python latest version
-  ```python --version
+* for windows
+    ``` 
+    msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
+    ```
+* Python latest version
+  ``` 
+  python --version
   ```
 ### Installation
 
 1. goto aws.amazon.com
 2. Clone the repo
-   ```sh
+   ```
+   sh
    git clone 'your repo '
    ```
 3. Install NPM packages
-   ```sh
+   ```
+   sh
    npm install
    ```
-4. Use cli and python code for desired tasked
+4. Create pipelinestack
+  ```
+  Create a stack.py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html" as reference
+  ```
+ 
+5. Add testing 
+  ```
+  add testing (unit,integrations) by following reference "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html"
+  ```
+
+6.  use this command to bootsrap your pipeline
+  ```
+  "cdk bootstrap --qualifier <name> --toolkit-stack-name <somename>"
+  ```
+  
+7. Deploy
+   ```
+   Use cdk deploy 'name' to deploy the pipeline
+   ```
+  
+## Note
+Always git push to make the changes work through pipeline
 
 
 
@@ -101,8 +127,7 @@ sudo ./aws/install
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-This project can be used to monitor the health of website which includes availability and latency of a given website , which
-will also notify the subscriper in case a certain threshold is reached 
+Pipeline automates the build, test, and deploy phases of your release process every time there is a code change, AWS CodePipeline is a continuous delivery service you can use to model, visualize, and automate the steps required to release your software. You can quickly model and configure the different stages of a software release process. CodePipeline automates the steps required to release your software changes continuously. For information about pricing for CodePipeline
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -110,10 +135,12 @@ will also notify the subscriper in case a certain threshold is reached
 <!-- ROADMAP -->
 ## Roadmap
 
-- [] health monitor
-- [] alarm
-- [] SNS
-    - [] Lambda sns
+- [] Simple pipeline
+- [] Added beta stage
+- [] Testing stages
+    - [] Unit testing
+    - [] Integration testing
+- [] Manual approval step
 
 
 
@@ -135,6 +162,11 @@ Project Link: [https://github.com/waheed2021skipq/ProximaCentauri](https://githu
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+
+
+## References
+
+[https://docs.aws.amazon.com/cdk/api/v1/python/modules.html]
 
 
 
