@@ -52,12 +52,7 @@ class waheedsprint(cdk.Stack):
             'region':'us-east-2'
         })
         
-        #add tests stages here
         
-        # beta= ProductionStage(self,'beta',env={
-        #     'account':'315997497220',
-        #     'region':'us-east-2'
-        # })
         
         ### Tests stage of our pipeline
         unit_test=pipelines.ShellStep('unit_test',
@@ -69,7 +64,8 @@ class waheedsprint(cdk.Stack):
             commands=[ "cd waheed_ahmad/sprint2",
                     "pip install -r requirements.txt","pytest integtest"]    )
         
-        pipeline.add_stage(beta, pre= [unit_test])
-        pipeline.add_stage(gemma , pre=[pipelines.ManualApprovalStep("promotetoproduction")])
+        pipeline.add_stage(beta)
+        #pipeline.add_stage(gemma , pre=[pipelines.ManualApprovalStep("promotetoproduction")])
+        pipeline.add_stage(gemma, pre= [unit_test],post=[pipelines.ManualApprovalStep("promotetodeployment")]) 
         pipeline.add_stage(prod, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")]) 
 
