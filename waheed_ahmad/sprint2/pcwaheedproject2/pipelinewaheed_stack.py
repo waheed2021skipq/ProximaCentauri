@@ -42,12 +42,21 @@ class waheedsprint(cdk.Stack):
             'region':'us-east-2'
         })
         
+        # prodd = ProductionStage(self,'prodd',env={
+        #     'account':'315997497220',
+        #     'region':'us-east-2'
+        # })
+        
         #add tests stages here
         
         # beta= ProductionStage(self,'beta',env={
         #     'account':'315997497220',
         #     'region':'us-east-2'
         # })
+        unit_test=pipelines.ShellStep('unit_test',
+            commands=[ "cd talha/sprint2",
+                    "pip install -r requirements.txt", 
+                    "pytest unittests",  "pytest integtest"]    )
         
-        pipeline.add_stage(beta)
+        pipeline.add_stage(beta, pre= [unit_test])
 
