@@ -32,7 +32,7 @@ class PcwaheedprojectStack(cdk.Stack):
 
         lambda_role= self.create_lambda_role()
         hw_lambda = self.create_lambda('lambda', './resources', 'webhealthmonitor.lambda_handler', lambda_role)
-        #db_lambda = self.create_lambda("DynamoDBLambda", "./resources", 'dynamodb_lambda.lambda_handler', lambda_role)
+        db_lambda = self.create_lambda("DynamoDBLambda", "./resources", 'dynamodb_lambda.lambda_handler', lambda_role)
         lambda_schedule= events_.Schedule.rate(cdk.Duration.minutes(1))
         lambda_target=targets_.LambdaFunction(handler=hw_lambda)
         rule= events_.Rule(self, "webHealth_invoke", 

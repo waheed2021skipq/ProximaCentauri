@@ -1,4 +1,4 @@
 import pytest
 
-def integ_testt():
+def test_inte():
     assert 2==2

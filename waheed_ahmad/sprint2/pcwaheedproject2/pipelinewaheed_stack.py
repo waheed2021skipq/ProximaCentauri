@@ -13,7 +13,7 @@ class waheedsprint(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
         
        
-
+    ##defining source here where the code should be pulled from for pipeline
         
         source= pipelines.CodePipelineSource.git_hub(repo_string ='waheed2021skipq/ProximaCentauri',
         branch= 'main',
@@ -53,6 +53,8 @@ class waheedsprint(cdk.Stack):
         #     'account':'315997497220',
         #     'region':'us-east-2'
         # })
+        
+        ### Tests stage of our pipeline
         unit_test=pipelines.ShellStep('unit_test',
             commands=[ "cd waheed_ahmad/sprint2",
                     "pip install -r requirements.txt",
