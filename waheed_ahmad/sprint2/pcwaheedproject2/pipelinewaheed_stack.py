@@ -17,7 +17,7 @@ class waheedsprint(cdk.Stack):
         
         source= pipelines.CodePipelineSource.git_hub(repo_string ='waheed2021skipq/ProximaCentauri',
         branch= 'main',
-        authentication =core.SecretValue.secrets_manager('github-oauthwaheedtokeneast'),
+        authentication =core.SecretValue.secrets_manager('github-oauthwaheedtokeneast'), #token in secrets manager
         trigger=cpactions.GitHubTrigger.POLL
         )
         
@@ -42,10 +42,15 @@ class waheedsprint(cdk.Stack):
             'region':'us-east-2'
         })
         
-        # prodd = ProductionStage(self,'prodd',env={
-        #     'account':'315997497220',
-        #     'region':'us-east-2'
-        # })
+        gemma = ProductionStage(self,'gemma',env={
+            'account':'315997497220',
+            'region':'us-east-2'
+        })
+        
+        prod = ProductionStage(self,'prod',env={
+            'account':'315997497220',
+            'region':'us-east-2'
+        })
         
         #add tests stages here
         
@@ -58,7 +63,13 @@ class waheedsprint(cdk.Stack):
         unit_test=pipelines.ShellStep('unit_test',
             commands=[ "cd waheed_ahmad/sprint2",
                     "pip install -r requirements.txt",
-                    "pytest unittests",  "pytest integtest"]    )
+                    "pytest unittests"]    )
+        
+        integ_test=pipelines.ShellStep('unit_test',
+            commands=[ "cd waheed_ahmad/sprint2",
+                    "pip install -r requirements.txt","pytest integtest"]    )
         
         pipeline.add_stage(beta, pre= [unit_test])
+        pipeline.add_stage(gemma , pre=[pipelines.ManualApprovalStep("promotetoproduction")])
+        pipeline.add_stage(prod, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")]) 
 
