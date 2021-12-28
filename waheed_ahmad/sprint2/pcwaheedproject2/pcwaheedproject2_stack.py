@@ -153,7 +153,9 @@ class PcwaheedprojectStack(cdk.Stack):
                         ])
         return lambdaRole
         
-    
+     def create_alais(self,id,name,version):
+        return lambda_.Alias(self , id , alias_name = name,
+        version = version)
     def create_lambda(self, id, asset,handler, role):
         return lambda_.Function(self, id,
         runtime=lambda_.Runtime.PYTHON_3_6 ,
@@ -168,6 +170,4 @@ class PcwaheedprojectStack(cdk.Stack):
     #     partition_key=key)
         
         
-    def create_alais(self,id,name,version):
-        return lambda_.Alias(self , id , alias_name = name,
-        version = version)
+   
