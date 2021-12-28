@@ -2692,7 +2692,7 @@
                             },
                             "source": {
                               "type": "CODEPIPELINE",
-                              "buildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": [\n        \"npm install -g cdk-assets\"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-waheedsprint-beta/waheedsprintbetawaheedstack5FBEE6E9.assets.json\\\" --verbose publish \\\"965f1608c5420f9a2d5c97daa6e352563808cd2246855aa1d4964b704eb81c63:315997497220-us-east-2\\\"\"\n      ]\n    }\n  }\n}"
+                              "buildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": [\n        \"npm install -g cdk-assets\"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-waheedsprint-beta/waheedsprintbetawaheedstack5FBEE6E9.assets.json\\\" --verbose publish \\\"08f7765b7ec9daaacca5ad54787995ebc77b7aa01d4d57c7bbf8713a711be839:315997497220-us-east-2\\\"\"\n      ]\n    }\n  }\n}"
                             },
                             "encryptionKey": "alias/aws/s3"
                           }
@@ -2728,13 +2728,13 @@
                 "id": "waheedstack",
                 "path": "waheedsprint/beta/waheedstack",
                 "children": {
-                  "lambda-role": {
-                    "id": "lambda-role",
-                    "path": "waheedsprint/beta/waheedstack/lambda-role",
+                  "lambda-role-db": {
+                    "id": "lambda-role-db",
+                    "path": "waheedsprint/beta/waheedstack/lambda-role-db",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "waheedsprint/beta/waheedstack/lambda-role/Resource",
+                        "path": "waheedsprint/beta/waheedstack/lambda-role-db/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                           "aws:cdk:cloudformation:props": {
@@ -2771,7 +2771,19 @@
                                     {
                                       "Ref": "AWS::Partition"
                                     },
-                                    ":iam::aws:policy/CloudwatchFullAccess"
+                                    ":iam::aws:policy/AmazonDynamoDBFullAccess"
+                                  ]
+                                ]
+                              },
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/AmazonSNSFullAccess"
                                   ]
                                 ]
                               },
@@ -2849,11 +2861,11 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-waheed11-assets-315997497220-us-east-2",
-                              "s3Key": "965f1608c5420f9a2d5c97daa6e352563808cd2246855aa1d4964b704eb81c63.zip"
+                              "s3Key": "08f7765b7ec9daaacca5ad54787995ebc77b7aa01d4d57c7bbf8713a711be839.zip"
                             },
                             "role": {
                               "Fn::GetAtt": [
-                                "lambdaroleDFE21467",
+                                "lambdaroledb8F96FA37",
                                 "Arn"
                               ]
                             },
@@ -2889,77 +2901,6 @@
                         },
                         "constructInfo": {
                           "fqn": "@aws-cdk/aws-lambda.Version",
-                          "version": "1.135.0"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "@aws-cdk/aws-lambda.Function",
-                      "version": "1.135.0"
-                    }
-                  },
-                  "DynamoDBLambda": {
-                    "id": "DynamoDBLambda",
-                    "path": "waheedsprint/beta/waheedstack/DynamoDBLambda",
-                    "children": {
-                      "Code": {
-                        "id": "Code",
-                        "path": "waheedsprint/beta/waheedstack/DynamoDBLambda/Code",
-                        "children": {
-                          "Stage": {
-                            "id": "Stage",
-                            "path": "waheedsprint/beta/waheedstack/DynamoDBLambda/Code/Stage",
-                            "constructInfo": {
-                              "fqn": "@aws-cdk/core.AssetStaging",
-                              "version": "1.135.0"
-                            }
-                          },
-                          "AssetBucket": {
-                            "id": "AssetBucket",
-                            "path": "waheedsprint/beta/waheedstack/DynamoDBLambda/Code/AssetBucket",
-                            "children": {
-                              "Notifications": {
-                                "id": "Notifications",
-                                "path": "waheedsprint/beta/waheedstack/DynamoDBLambda/Code/AssetBucket/Notifications",
-                                "constructInfo": {
-                                  "fqn": "@aws-cdk/core.Construct",
-                                  "version": "1.135.0"
-                                }
-                              }
-                            },
-                            "constructInfo": {
-                              "fqn": "@aws-cdk/aws-s3.BucketBase",
-                              "version": "1.135.0"
-                            }
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "@aws-cdk/aws-s3-assets.Asset",
-                          "version": "1.135.0"
-                        }
-                      },
-                      "Resource": {
-                        "id": "Resource",
-                        "path": "waheedsprint/beta/waheedstack/DynamoDBLambda/Resource",
-                        "attributes": {
-                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
-                          "aws:cdk:cloudformation:props": {
-                            "code": {
-                              "s3Bucket": "cdk-waheed11-assets-315997497220-us-east-2",
-                              "s3Key": "965f1608c5420f9a2d5c97daa6e352563808cd2246855aa1d4964b704eb81c63.zip"
-                            },
-                            "role": {
-                              "Fn::GetAtt": [
-                                "lambdaroleDFE21467",
-                                "Arn"
-                              ]
-                            },
-                            "handler": "dynamodb_lambda.lambda_handler",
-                            "runtime": "python3.6"
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "@aws-cdk/aws-lambda.CfnFunction",
                           "version": "1.135.0"
                         }
                       }
@@ -3182,7 +3123,7 @@
                             },
                             "functionVersion": {
                               "Fn::GetAtt": [
-                                "lambdaCurrentVersionD18FDC35e831296599ae16bf686503dad2952b55",
+                                "lambdaCurrentVersionD18FDC35f73c4acf99201f7b1701a12e5dbc83fe",
                                 "Version"
                               ]
                             },
@@ -3205,6 +3146,133 @@
                     },
                     "constructInfo": {
                       "fqn": "@aws-cdk/aws-lambda.Alias",
+                      "version": "1.135.0"
+                    }
+                  },
+                  "webhealthmonitor": {
+                    "id": "webhealthmonitor",
+                    "path": "waheedsprint/beta/waheedstack/webhealthmonitor",
+                    "children": {
+                      "Application": {
+                        "id": "Application",
+                        "path": "waheedsprint/beta/waheedstack/webhealthmonitor/Application",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "waheedsprint/beta/waheedstack/webhealthmonitor/Application/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::CodeDeploy::Application",
+                              "aws:cdk:cloudformation:props": {
+                                "computePlatform": "Lambda"
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-codedeploy.CfnApplication",
+                              "version": "1.135.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-codedeploy.LambdaApplication",
+                          "version": "1.135.0"
+                        }
+                      },
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "waheedsprint/beta/waheedstack/webhealthmonitor/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "waheedsprint/beta/waheedstack/webhealthmonitor/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "codedeploy.us-east-2.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSCodeDeployRoleForLambdaLimited"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-iam.CfnRole",
+                              "version": "1.135.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-iam.Role",
+                          "version": "1.135.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "waheedsprint/beta/waheedstack/webhealthmonitor/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CodeDeploy::DeploymentGroup",
+                          "aws:cdk:cloudformation:props": {
+                            "applicationName": {
+                              "Ref": "webhealthmonitorApplication873C1585"
+                            },
+                            "serviceRoleArn": {
+                              "Fn::GetAtt": [
+                                "webhealthmonitorServiceRole71B2D993",
+                                "Arn"
+                              ]
+                            },
+                            "alarmConfiguration": {
+                              "alarms": [
+                                {
+                                  "name": {
+                                    "Ref": "pipelinealarmA8CF1656"
+                                  }
+                                }
+                              ],
+                              "enabled": true
+                            },
+                            "autoRollbackConfiguration": {
+                              "enabled": true,
+                              "events": [
+                                "DEPLOYMENT_FAILURE",
+                                "DEPLOYMENT_STOP_ON_ALARM"
+                              ]
+                            },
+                            "deploymentConfigName": "CodeDeployDefault.LambdaCanary10Percent5Minutes",
+                            "deploymentStyle": {
+                              "deploymentType": "BLUE_GREEN",
+                              "deploymentOption": "WITH_TRAFFIC_CONTROL"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-codedeploy.CfnDeploymentGroup",
+                          "version": "1.135.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-codedeploy.LambdaDeploymentGroup",
                       "version": "1.135.0"
                     }
                   },
@@ -3262,13 +3330,13 @@
                 "id": "waheedstack",
                 "path": "waheedsprint/gemma/waheedstack",
                 "children": {
-                  "lambda-role": {
-                    "id": "lambda-role",
-                    "path": "waheedsprint/gemma/waheedstack/lambda-role",
+                  "lambda-role-db": {
+                    "id": "lambda-role-db",
+                    "path": "waheedsprint/gemma/waheedstack/lambda-role-db",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "waheedsprint/gemma/waheedstack/lambda-role/Resource",
+                        "path": "waheedsprint/gemma/waheedstack/lambda-role-db/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                           "aws:cdk:cloudformation:props": {
@@ -3305,7 +3373,19 @@
                                     {
                                       "Ref": "AWS::Partition"
                                     },
-                                    ":iam::aws:policy/CloudwatchFullAccess"
+                                    ":iam::aws:policy/AmazonDynamoDBFullAccess"
+                                  ]
+                                ]
+                              },
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/AmazonSNSFullAccess"
                                   ]
                                 ]
                               },
@@ -3383,11 +3463,11 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-waheed11-assets-315997497220-us-east-2",
-                              "s3Key": "965f1608c5420f9a2d5c97daa6e352563808cd2246855aa1d4964b704eb81c63.zip"
+                              "s3Key": "08f7765b7ec9daaacca5ad54787995ebc77b7aa01d4d57c7bbf8713a711be839.zip"
                             },
                             "role": {
                               "Fn::GetAtt": [
-                                "lambdaroleDFE21467",
+                                "lambdaroledb8F96FA37",
                                 "Arn"
                               ]
                             },
@@ -3423,77 +3503,6 @@
                         },
                         "constructInfo": {
                           "fqn": "@aws-cdk/aws-lambda.Version",
-                          "version": "1.135.0"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "@aws-cdk/aws-lambda.Function",
-                      "version": "1.135.0"
-                    }
-                  },
-                  "DynamoDBLambda": {
-                    "id": "DynamoDBLambda",
-                    "path": "waheedsprint/gemma/waheedstack/DynamoDBLambda",
-                    "children": {
-                      "Code": {
-                        "id": "Code",
-                        "path": "waheedsprint/gemma/waheedstack/DynamoDBLambda/Code",
-                        "children": {
-                          "Stage": {
-                            "id": "Stage",
-                            "path": "waheedsprint/gemma/waheedstack/DynamoDBLambda/Code/Stage",
-                            "constructInfo": {
-                              "fqn": "@aws-cdk/core.AssetStaging",
-                              "version": "1.135.0"
-                            }
-                          },
-                          "AssetBucket": {
-                            "id": "AssetBucket",
-                            "path": "waheedsprint/gemma/waheedstack/DynamoDBLambda/Code/AssetBucket",
-                            "children": {
-                              "Notifications": {
-                                "id": "Notifications",
-                                "path": "waheedsprint/gemma/waheedstack/DynamoDBLambda/Code/AssetBucket/Notifications",
-                                "constructInfo": {
-                                  "fqn": "@aws-cdk/core.Construct",
-                                  "version": "1.135.0"
-                                }
-                              }
-                            },
-                            "constructInfo": {
-                              "fqn": "@aws-cdk/aws-s3.BucketBase",
-                              "version": "1.135.0"
-                            }
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "@aws-cdk/aws-s3-assets.Asset",
-                          "version": "1.135.0"
-                        }
-                      },
-                      "Resource": {
-                        "id": "Resource",
-                        "path": "waheedsprint/gemma/waheedstack/DynamoDBLambda/Resource",
-                        "attributes": {
-                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
-                          "aws:cdk:cloudformation:props": {
-                            "code": {
-                              "s3Bucket": "cdk-waheed11-assets-315997497220-us-east-2",
-                              "s3Key": "965f1608c5420f9a2d5c97daa6e352563808cd2246855aa1d4964b704eb81c63.zip"
-                            },
-                            "role": {
-                              "Fn::GetAtt": [
-                                "lambdaroleDFE21467",
-                                "Arn"
-                              ]
-                            },
-                            "handler": "dynamodb_lambda.lambda_handler",
-                            "runtime": "python3.6"
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "@aws-cdk/aws-lambda.CfnFunction",
                           "version": "1.135.0"
                         }
                       }
@@ -3716,7 +3725,7 @@
                             },
                             "functionVersion": {
                               "Fn::GetAtt": [
-                                "lambdaCurrentVersionD18FDC35e831296599ae16bf686503dad2952b55",
+                                "lambdaCurrentVersionD18FDC35f73c4acf99201f7b1701a12e5dbc83fe",
                                 "Version"
                               ]
                             },
@@ -3739,6 +3748,133 @@
                     },
                     "constructInfo": {
                       "fqn": "@aws-cdk/aws-lambda.Alias",
+                      "version": "1.135.0"
+                    }
+                  },
+                  "webhealthmonitor": {
+                    "id": "webhealthmonitor",
+                    "path": "waheedsprint/gemma/waheedstack/webhealthmonitor",
+                    "children": {
+                      "Application": {
+                        "id": "Application",
+                        "path": "waheedsprint/gemma/waheedstack/webhealthmonitor/Application",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "waheedsprint/gemma/waheedstack/webhealthmonitor/Application/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::CodeDeploy::Application",
+                              "aws:cdk:cloudformation:props": {
+                                "computePlatform": "Lambda"
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-codedeploy.CfnApplication",
+                              "version": "1.135.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-codedeploy.LambdaApplication",
+                          "version": "1.135.0"
+                        }
+                      },
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "waheedsprint/gemma/waheedstack/webhealthmonitor/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "waheedsprint/gemma/waheedstack/webhealthmonitor/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "codedeploy.us-east-2.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSCodeDeployRoleForLambdaLimited"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-iam.CfnRole",
+                              "version": "1.135.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-iam.Role",
+                          "version": "1.135.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "waheedsprint/gemma/waheedstack/webhealthmonitor/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CodeDeploy::DeploymentGroup",
+                          "aws:cdk:cloudformation:props": {
+                            "applicationName": {
+                              "Ref": "webhealthmonitorApplication873C1585"
+                            },
+                            "serviceRoleArn": {
+                              "Fn::GetAtt": [
+                                "webhealthmonitorServiceRole71B2D993",
+                                "Arn"
+                              ]
+                            },
+                            "alarmConfiguration": {
+                              "alarms": [
+                                {
+                                  "name": {
+                                    "Ref": "pipelinealarmA8CF1656"
+                                  }
+                                }
+                              ],
+                              "enabled": true
+                            },
+                            "autoRollbackConfiguration": {
+                              "enabled": true,
+                              "events": [
+                                "DEPLOYMENT_FAILURE",
+                                "DEPLOYMENT_STOP_ON_ALARM"
+                              ]
+                            },
+                            "deploymentConfigName": "CodeDeployDefault.LambdaCanary10Percent5Minutes",
+                            "deploymentStyle": {
+                              "deploymentType": "BLUE_GREEN",
+                              "deploymentOption": "WITH_TRAFFIC_CONTROL"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-codedeploy.CfnDeploymentGroup",
+                          "version": "1.135.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-codedeploy.LambdaDeploymentGroup",
                       "version": "1.135.0"
                     }
                   },
@@ -3796,13 +3932,13 @@
                 "id": "waheedstack",
                 "path": "waheedsprint/prod/waheedstack",
                 "children": {
-                  "lambda-role": {
-                    "id": "lambda-role",
-                    "path": "waheedsprint/prod/waheedstack/lambda-role",
+                  "lambda-role-db": {
+                    "id": "lambda-role-db",
+                    "path": "waheedsprint/prod/waheedstack/lambda-role-db",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "waheedsprint/prod/waheedstack/lambda-role/Resource",
+                        "path": "waheedsprint/prod/waheedstack/lambda-role-db/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                           "aws:cdk:cloudformation:props": {
@@ -3839,7 +3975,19 @@
                                     {
                                       "Ref": "AWS::Partition"
                                     },
-                                    ":iam::aws:policy/CloudwatchFullAccess"
+                                    ":iam::aws:policy/AmazonDynamoDBFullAccess"
+                                  ]
+                                ]
+                              },
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/AmazonSNSFullAccess"
                                   ]
                                 ]
                               },
@@ -3917,11 +4065,11 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-waheed11-assets-315997497220-us-east-2",
-                              "s3Key": "965f1608c5420f9a2d5c97daa6e352563808cd2246855aa1d4964b704eb81c63.zip"
+                              "s3Key": "08f7765b7ec9daaacca5ad54787995ebc77b7aa01d4d57c7bbf8713a711be839.zip"
                             },
                             "role": {
                               "Fn::GetAtt": [
-                                "lambdaroleDFE21467",
+                                "lambdaroledb8F96FA37",
                                 "Arn"
                               ]
                             },
@@ -3957,77 +4105,6 @@
                         },
                         "constructInfo": {
                           "fqn": "@aws-cdk/aws-lambda.Version",
-                          "version": "1.135.0"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "@aws-cdk/aws-lambda.Function",
-                      "version": "1.135.0"
-                    }
-                  },
-                  "DynamoDBLambda": {
-                    "id": "DynamoDBLambda",
-                    "path": "waheedsprint/prod/waheedstack/DynamoDBLambda",
-                    "children": {
-                      "Code": {
-                        "id": "Code",
-                        "path": "waheedsprint/prod/waheedstack/DynamoDBLambda/Code",
-                        "children": {
-                          "Stage": {
-                            "id": "Stage",
-                            "path": "waheedsprint/prod/waheedstack/DynamoDBLambda/Code/Stage",
-                            "constructInfo": {
-                              "fqn": "@aws-cdk/core.AssetStaging",
-                              "version": "1.135.0"
-                            }
-                          },
-                          "AssetBucket": {
-                            "id": "AssetBucket",
-                            "path": "waheedsprint/prod/waheedstack/DynamoDBLambda/Code/AssetBucket",
-                            "children": {
-                              "Notifications": {
-                                "id": "Notifications",
-                                "path": "waheedsprint/prod/waheedstack/DynamoDBLambda/Code/AssetBucket/Notifications",
-                                "constructInfo": {
-                                  "fqn": "@aws-cdk/core.Construct",
-                                  "version": "1.135.0"
-                                }
-                              }
-                            },
-                            "constructInfo": {
-                              "fqn": "@aws-cdk/aws-s3.BucketBase",
-                              "version": "1.135.0"
-                            }
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "@aws-cdk/aws-s3-assets.Asset",
-                          "version": "1.135.0"
-                        }
-                      },
-                      "Resource": {
-                        "id": "Resource",
-                        "path": "waheedsprint/prod/waheedstack/DynamoDBLambda/Resource",
-                        "attributes": {
-                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
-                          "aws:cdk:cloudformation:props": {
-                            "code": {
-                              "s3Bucket": "cdk-waheed11-assets-315997497220-us-east-2",
-                              "s3Key": "965f1608c5420f9a2d5c97daa6e352563808cd2246855aa1d4964b704eb81c63.zip"
-                            },
-                            "role": {
-                              "Fn::GetAtt": [
-                                "lambdaroleDFE21467",
-                                "Arn"
-                              ]
-                            },
-                            "handler": "dynamodb_lambda.lambda_handler",
-                            "runtime": "python3.6"
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "@aws-cdk/aws-lambda.CfnFunction",
                           "version": "1.135.0"
                         }
                       }
@@ -4250,7 +4327,7 @@
                             },
                             "functionVersion": {
                               "Fn::GetAtt": [
-                                "lambdaCurrentVersionD18FDC35e831296599ae16bf686503dad2952b55",
+                                "lambdaCurrentVersionD18FDC35f73c4acf99201f7b1701a12e5dbc83fe",
                                 "Version"
                               ]
                             },
@@ -4273,6 +4350,133 @@
                     },
                     "constructInfo": {
                       "fqn": "@aws-cdk/aws-lambda.Alias",
+                      "version": "1.135.0"
+                    }
+                  },
+                  "webhealthmonitor": {
+                    "id": "webhealthmonitor",
+                    "path": "waheedsprint/prod/waheedstack/webhealthmonitor",
+                    "children": {
+                      "Application": {
+                        "id": "Application",
+                        "path": "waheedsprint/prod/waheedstack/webhealthmonitor/Application",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "waheedsprint/prod/waheedstack/webhealthmonitor/Application/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::CodeDeploy::Application",
+                              "aws:cdk:cloudformation:props": {
+                                "computePlatform": "Lambda"
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-codedeploy.CfnApplication",
+                              "version": "1.135.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-codedeploy.LambdaApplication",
+                          "version": "1.135.0"
+                        }
+                      },
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "waheedsprint/prod/waheedstack/webhealthmonitor/ServiceRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "waheedsprint/prod/waheedstack/webhealthmonitor/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "codedeploy.us-east-2.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSCodeDeployRoleForLambdaLimited"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-iam.CfnRole",
+                              "version": "1.135.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-iam.Role",
+                          "version": "1.135.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "waheedsprint/prod/waheedstack/webhealthmonitor/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CodeDeploy::DeploymentGroup",
+                          "aws:cdk:cloudformation:props": {
+                            "applicationName": {
+                              "Ref": "webhealthmonitorApplication873C1585"
+                            },
+                            "serviceRoleArn": {
+                              "Fn::GetAtt": [
+                                "webhealthmonitorServiceRole71B2D993",
+                                "Arn"
+                              ]
+                            },
+                            "alarmConfiguration": {
+                              "alarms": [
+                                {
+                                  "name": {
+                                    "Ref": "pipelinealarmA8CF1656"
+                                  }
+                                }
+                              ],
+                              "enabled": true
+                            },
+                            "autoRollbackConfiguration": {
+                              "enabled": true,
+                              "events": [
+                                "DEPLOYMENT_FAILURE",
+                                "DEPLOYMENT_STOP_ON_ALARM"
+                              ]
+                            },
+                            "deploymentConfigName": "CodeDeployDefault.LambdaCanary10Percent5Minutes",
+                            "deploymentStyle": {
+                              "deploymentType": "BLUE_GREEN",
+                              "deploymentOption": "WITH_TRAFFIC_CONTROL"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-codedeploy.CfnDeploymentGroup",
+                          "version": "1.135.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-codedeploy.LambdaDeploymentGroup",
                       "version": "1.135.0"
                     }
                   },

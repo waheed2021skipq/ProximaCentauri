@@ -1,7 +1,7 @@
 import json
 import boto3
 import os
-from dynamo import dynamodbPut
+#from dynamo import dynamodbPut
 
 def lambda_handler(events, context):
     client = boto3.client('dynamodb')

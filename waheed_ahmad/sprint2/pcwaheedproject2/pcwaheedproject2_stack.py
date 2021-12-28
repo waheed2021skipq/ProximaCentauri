@@ -5,16 +5,16 @@ from aws_cdk import (
     aws_events_targets as targets_,
     aws_iam,
     aws_cloudwatch as cloudwatch_,
-    aws_cloudwatch_actions as actions_,
+    #aws_cloudwatch_actions as actions_,
     aws_sns as sns,
     aws_sns_subscriptions as subscriptions_,
     aws_codedeploy as codedeploy,
-    aws_dynamodb as db
+    #aws_dynamodb as db
     #aws_s3 as s3,
     #aws_sqs as sqs,
     #aws_s3_notifications as s3n
 )
-
+#import Construct as Construct
 from resources import constants as constants
 import resources as resources
 #from aws_cdk import core
@@ -46,14 +46,14 @@ class PcwaheedprojectStack(cdk.Stack):
         
         
         ####### dynamoo table 
-        dynamo_table=self.create_table(id='waheedalarmtable',
-                                        key=db.Attribute(name="Timestamp",
-                                        type=db.AttributeType.STRING))
-        db_lambda_role = self.create_dbtable_lambda_role()
-        db_lambda = self.create_lambda("DynamoDBLambda", "./resources", 'dynamodb_lambda.lambda_handler', lambda_role)
+        # dynamo_table=self.create_table(id='waheedalarmtable',
+        #                                 key=db.Attribute(name="Timestamp",
+        #                                 type=db.AttributeType.STRING))
+        # db_lambda_role = self.create_dbtable_lambda_role()
+        # db_lambda = self.create_lambda("DynamoDBLambda", "./resources", 'dynamodb_lambda.lambda_handler', lambda_role)
         
-        dynamo_table.grant_full_access(db_lambda)
-        db_lambda.add_environment('table_name', dynamo_table.table_name)
+        # dynamo_table.grant_full_access(db_lambda)
+        # db_lambda.add_environment('table_name', dynamo_table.table_name)
         
         # waheedbucket= s3.Bucket(self, "waheedbkt")
     
@@ -65,9 +65,9 @@ class PcwaheedprojectStack(cdk.Stack):
         #####also provide full read write access to table
         
         #####module code for sending sns notifications########################################################
-        topic =sns.Topic(self, "webhealthmonitor")
-        topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
-        topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
+        # topic =sns.Topic(self, "webhealthmonitor")
+        # topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
+        # topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
         
         
         
@@ -163,9 +163,9 @@ class PcwaheedprojectStack(cdk.Stack):
 )
      ### create table ###
      
-    def create_table(self,id,key):
-        return db.Table(self,id,
-        partition_key=key)
+    # def create_table(self,id,key):
+    #     return db.Table(self,id,
+    #     partition_key=key)
         
         
     def create_alais(self,id,name,version):

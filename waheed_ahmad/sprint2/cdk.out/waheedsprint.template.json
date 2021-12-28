@@ -1945,7 +1945,7 @@
           ]
         },
         "Source": {
-          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": [\n        \"npm install -g cdk-assets\"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-waheedsprint-beta/waheedsprintbetawaheedstack5FBEE6E9.assets.json\\\" --verbose publish \\\"965f1608c5420f9a2d5c97daa6e352563808cd2246855aa1d4964b704eb81c63:315997497220-us-east-2\\\"\"\n      ]\n    }\n  }\n}",
+          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": [\n        \"npm install -g cdk-assets\"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-waheedsprint-beta/waheedsprintbetawaheedstack5FBEE6E9.assets.json\\\" --verbose publish \\\"08f7765b7ec9daaacca5ad54787995ebc77b7aa01d4d57c7bbf8713a711be839:315997497220-us-east-2\\\"\"\n      ]\n    }\n  }\n}",
           "Type": "CODEPIPELINE"
         },
         "EncryptionKey": "alias/aws/s3"
