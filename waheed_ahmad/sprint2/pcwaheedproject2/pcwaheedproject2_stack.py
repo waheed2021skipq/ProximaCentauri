@@ -153,7 +153,7 @@ class PcwaheedprojectStack(cdk.Stack):
                         ])
         return lambdaRole
         
-     def create_alais(self,id,name,version):
+    def create_alais(self,id,name,version):
         return lambda_.Alias(self , id , alias_name = name,
         version = version)
     def create_lambda(self, id, asset,handler, role):
