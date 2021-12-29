@@ -2,9 +2,9 @@ import json
 import boto3
 import os
 #from dynamo import dynamodbPut
-
+client = boto3.client('dynamodb')
 def lambda_handler(events, context):
-    client = boto3.client('dynamodb')
+    
     message = event['Records'][0]['Sns']
     parsed_msg = json.loads(message['Message'])
     

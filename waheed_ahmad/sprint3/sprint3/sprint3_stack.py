@@ -17,14 +17,15 @@ from aws_cdk import (
 #import Construct as Construct
 from resources import constants as constants
 import resources as resources
-#from aws_cdk import core
-URL_TO_MONITOR='www.twitter.com'
-URL_MONITOR_NAMESPACE="waheedwebhealth"
-URL_MONIROR_NAME_AVAILABILITY= "url_availability"
-URL_MONIROR_NAME_LATENCY= "url_latency"
+from resources.s3 import mywahedbuks3 as buk
+# #from aws_cdk import core
+# URL_TO_MONITOR='www.twitter.com'
+# URL_MONITOR_NAMESPACE="waheedwebhealth"
+# URL_MONIROR_NAME_AVAILABILITY= "url_availability"
+# URL_MONIROR_NAME_LATENCY= "url_latency"
 
 
-class PcwaheedprojectStack(cdk.Stack):
+class waheedsprint2(cdk.Stack):
 
     
     
@@ -61,11 +62,11 @@ class PcwaheedprojectStack(cdk.Stack):
         # visibility_timeout=cdk.Duration.seconds(300) ) 
         #waheedbucket.add_event_notification( s3.EventType.OBJECT_CREATED, s3n.SqsDestination(queue) )
         
-        db.table.grant_read_write_data(db_lambda)
+       # db.table.grant_read_write_data(db_lambda)
         #####also provide full read write access to table
         
         #####module code for sending sns notifications########################################################
-        topic =sns.Topic(self, "webhealthmonitor")
+        topic =sns.Topic(self, "webhealthmonitortopic")
         topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
         topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
         
@@ -73,47 +74,54 @@ class PcwaheedprojectStack(cdk.Stack):
         
         
         #for urls in s3_buckk
-        dimension={'URL' :URL_TO_MONITOR}
-       #####alarm to raise, sprint 2 pipeline
+        Url_Monitor = buk().bucket_as_list()
+        b=1
+        for url in Url_Monitor:
+            dimension={'URL' : url}
+           #####alarm to raise, sprint 2 pipeline
+              
+            availability_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
+                                                    metric_name= constants.URL_MONIROR_NAME_AVAILABILITY,
+                                                    dimensions_map=dimension,
+                                                    period=cdk.Duration.minutes(1),
+                                                    label= 'Availability Metric')
+            availability_alarm= cloudwatch_.Alarm(self, 
+    			id='AvailabilityAlarm'+'_'+url,
+    			metric= availability_metric , 
+    			comparison_operator= cloudwatch_.ComparisonOperator.LESS_THAN_THRESHOLD  , 
+    			datapoints_to_alarm=1, 
+    			evaluation_periods=1,
+    		 	threshold=1)    
+        
+            dimension={'URL':url}
+            latency_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
+                                             metric_name=constants.URL_MONIROR_NAME_LATENCY,
+                                             dimensions_map=dimension,
+                                             period=cdk.Duration.minutes(1),
+                                             label= 'latency Metric' )
+            latency_alarm= cloudwatch_.Alarm(self, 
+    			id='LatencyAlarm'+'_'+url,
+    			metric= latency_metric , 
+    			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD , 
+    			datapoints_to_alarm=1, 
+    			evaluation_periods=1,
+    		 	threshold=0.25 )
+            availability_alarm.add_alarm_action(actions_.SnsAction(topic))
+            latency_alarm.add_alarm_action(actions_.SnsAction(topic))
+            b =b + 1
+    
+    ##########link the alarm to subscription
+        
         duration_metric=cloudwatch_.Metric(namespace = 'AWS/Lambda', 
-                                                metric_name = 'Duration',
-                                                dimensions_map = {'FunctionName' : hw_lambda.function_name})
+                                        metric_name = 'Duration',
+                                        dimensions_map = {'FunctionName' :hw_lambda.function_name})
         failure_alarm= cloudwatch_.Alarm(self, 
 			id='pipelinealarm',
 			metric= duration_metric , 
 			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD, 
 			evaluation_periods=1,
-		 	threshold=350)   
-        availability_metric=cloudwatch_.Metric(namespace=URL_MONITOR_NAMESPACE, 
-                                                metric_name= URL_MONIROR_NAME_AVAILABILITY,
-                                                dimensions_map=dimension,
-                                                period=cdk.Duration.minutes(1),
-                                                label= 'Availability Metric')
-        availability_alarm= cloudwatch_.Alarm(self, 
-			id='AvailabilityAlarm',
-			metric= availability_metric , 
-			comparison_operator= cloudwatch_.ComparisonOperator.LESS_THAN_THRESHOLD  , 
-			datapoints_to_alarm=1, 
-			evaluation_periods=1,
-		 	threshold=1)    
-    
-        dimension={'URL':URL_TO_MONITOR}
-        latency_metric=cloudwatch_.Metric(namespace=URL_MONITOR_NAMESPACE, 
-                                         metric_name=URL_MONIROR_NAME_LATENCY,
-                                         dimensions_map=dimension,
-                                         period=cdk.Duration.minutes(1),
-                                         label= 'latency Metric' )
-        latency_alarm= cloudwatch_.Alarm(self, 
-			id='LatencyAlarm',
-			metric= latency_metric , 
-			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD , 
-			datapoints_to_alarm=1, 
-			evaluation_periods=1,
-		 	threshold=0.25 )
-    
-    ##########link the alarm to subscription
-        
-        
+		 	threshold=350) 
+        versions = hw_lambda.add_version("nnversion")
         myalias = lambda_.Alias(self, "LambdaAlias",
                             alias_name="waheedpipelinealias",
                             version= hw_lambda.current_version)
@@ -128,9 +136,7 @@ class PcwaheedprojectStack(cdk.Stack):
         # alias,
         # LINEAR_10_PERCENT_EVERY_5_MINUTE,
         # alarms=[failure_alarm])
-        # failure_alarm.add_alarm_action(actions_.SnsAction(topic))
-        # availability_alarm.add_alarm_action(actions_.SnsAction(topic))
-        # latency_alarm.add_alarm_action(actions_.SnsAction(topic))
+        failure_alarm.add_alarm_action(actions_.SnsAction(topic))
     
     def create_lambda_role(self):
         lambdaRole = aws_iam.Role(self, "lambda-role-db",
@@ -143,7 +149,7 @@ class PcwaheedprojectStack(cdk.Stack):
                         ])
         return lambdaRole
     def create_dbtable_lambda_role(self):
-        lambdaRole = aws_iam.Role(self, "lambda-role-db",
+        lambdaRole = aws_iam.Role(self, "lambda-role-db2",
                         assumed_by = aws_iam.ServicePrincipal('lambda.amazonaws.com'),
                         managed_policies=[
                             aws_iam.ManagedPolicy.from_aws_managed_policy_name('service-role/AWSLambdaBasicExecutionRole'),
