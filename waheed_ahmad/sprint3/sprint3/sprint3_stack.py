@@ -112,31 +112,31 @@ class waheedsprint2(cdk.Stack):
     
     ##########link the alarm to subscription
         
-        duration_metric=cloudwatch_.Metric(namespace = 'AWS/Lambda', 
-                                        metric_name = 'Duration',
-                                        dimensions_map = {'FunctionName' :hw_lambda.function_name})
-        failure_alarm= cloudwatch_.Alarm(self, 
-			id='pipelinealarm',
-			metric= duration_metric , 
-			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD, 
-			evaluation_periods=1,
-		 	threshold=350) 
-        versions = hw_lambda.add_version("nnversion")
-        myalias = lambda_.Alias(self, "LambdaAlias",
-                            alias_name="waheedpipelinealias",
-                            version= hw_lambda.current_version)
+#         duration_metric=cloudwatch_.Metric(namespace = 'AWS/Lambda', 
+#                                         metric_name = 'Duration',
+#                                         dimensions_map = {'FunctionName' :hw_lambda.function_name})
+#         failure_alarm= cloudwatch_.Alarm(self, 
+# 			id='pipelinealarm',
+# 			metric= duration_metric , 
+# 			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD, 
+# 			evaluation_periods=1,
+# 		 	threshold=350) 
+#         versions = hw_lambda.add_version("nnversion")
+#         myalias = lambda_.Alias(self, "LambdaAlias",
+#                             alias_name="waheedpipelinealias",
+#                             version= hw_lambda.current_version)
 
-        codedeploy.LambdaDeploymentGroup(self, "webhealthmonitor",
-                                        alias= myalias,
-                                        alarms = [failure_alarm])
+#         codedeploy.LambdaDeploymentGroup(self, "webhealthmonitor",
+#                                         alias= myalias,
+#                                         alarms = [failure_alarm])
         
         
-        # codedeploy.LambdaDeploymentConfig(self, 
-        # "code" ,
-        # alias,
-        # LINEAR_10_PERCENT_EVERY_5_MINUTE,
-        # alarms=[failure_alarm])
-        failure_alarm.add_alarm_action(actions_.SnsAction(topic))
+#         # codedeploy.LambdaDeploymentConfig(self, 
+#         # "code" ,
+#         # alias,
+#         # LINEAR_10_PERCENT_EVERY_5_MINUTE,
+#         # alarms=[failure_alarm])
+#         failure_alarm.add_alarm_action(actions_.SnsAction(topic))
     
     def create_lambda_role(self):
         lambdaRole = aws_iam.Role(self, "lambda-role-db",

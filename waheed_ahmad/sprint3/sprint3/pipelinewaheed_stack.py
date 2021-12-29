@@ -42,12 +42,12 @@ class waheedsprint2(cdk.Stack):
             'region':'us-east-2'
         })
         
-        # #gemma = ProductionStage(self,'gemma',env={
+        gemma = ProductionStage(self,'gemma',env={
         #     'account':'315997497220',
         #     'region':'us-east-2'
         # })
         
-        # #prod = ProductionStage(self,'prod',env={
+        prod = ProductionStage(self,'prod',env={
         #     'account':'315997497220',
         #     'region':'us-east-2'
         # })
@@ -55,17 +55,17 @@ class waheedsprint2(cdk.Stack):
         
         
         ### Tests stage of our pipeline
-        # #unit_test=pipelines.ShellStep('unit_test',
-        #     commands=[ "cd waheed_ahmad/sprint2",
-        #             "pip install -r requirements.txt",
-        #             "pytest unittests"]    )
+        unit_test=pipelines.ShellStep('unit_test',
+            commands=[ "cd waheed_ahmad/sprint2",
+                    "pip install -r requirements.txt",
+                    "pytest unittest"]    )
         
-        # #integ_test=pipelines.ShellStep('unit_test',
-        #     commands=[ "cd waheed_ahmad/sprint2",
-        #             "pip install -r requirements.txt","pytest integtest"]    )
+        integ_test=pipelines.ShellStep('unit_test',
+            commands=[ "cd waheed_ahmad/sprint2",
+                    "pip install -r requirements.txt","pytest integtest"]    )
         
         pipeline.add_stage(beta)
-        #pipeline.add_stage(gemma, pre= [unit_test],post=[pipelines.ManualApprovalStep("promotetodeproduction")])  
+        pipeline.add_stage(gemma, pre= [unit_test])  
         # if i add pre manual approval so it gets paused for human manual  approval tll then it is not deployed
-        #pipeline.add_stage(prod, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")]) 
+        pipeline.add_stage(prod, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")]) 
 
