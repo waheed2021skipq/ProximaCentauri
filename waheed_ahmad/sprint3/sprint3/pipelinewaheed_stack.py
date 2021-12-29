@@ -43,14 +43,14 @@ class waheedsprint2(cdk.Stack):
         })
         
         gemma = ProductionStage(self,'gemma',env={
-        #     'account':'315997497220',
-        #     'region':'us-east-2'
-        # })
+            'account':'315997497220',
+            'region':'us-east-2'
+        })
         
         prod = ProductionStage(self,'prod',env={
-        #     'account':'315997497220',
-        #     'region':'us-east-2'
-        # })
+            'account':'315997497220',
+            'region':'us-east-2'
+        })
         
         
         
