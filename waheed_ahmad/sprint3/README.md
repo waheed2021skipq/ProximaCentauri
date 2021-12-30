@@ -1,6 +1,6 @@
 <div id="top"></div>
 
-<h3 align="center">SPRINT3 PROEJCT SKIPQ</h3>
+<h3 align="center">SPRINT3 PROEJECT SKIPQ</h3>
 
   <p align="center">
     This project is to create multi stage pipeline having beta/gamma and production stages , integrate unit testing and integration stages , and finally add a manual approval step
