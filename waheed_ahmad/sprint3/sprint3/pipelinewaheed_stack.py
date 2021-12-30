@@ -56,12 +56,12 @@ class waheedsprint2(cdk.Stack):
         
         ### Tests stage of our pipeline
         unit_test=pipelines.ShellStep('unit_test',
-            commands=[ "cd waheed_ahmad/sprint2",
+            commands=[ "cd waheed_ahmad/sprint3",
                     "pip install -r requirements.txt",
                     "pytest unittest"]    )
         
         integ_test=pipelines.ShellStep('unit_test',
-            commands=[ "cd waheed_ahmad/sprint2",
+            commands=[ "cd waheed_ahmad/sprint3",
                     "pip install -r requirements.txt","pytest integtest"]    )
         
         pipeline.add_stage(beta)
