@@ -3,7 +3,7 @@
 <h3 align="center">SPRINT3 PROEJECT SKIPQ</h3>
 
   <p align="center">
-    This project is to create multi stage pipeline having beta/gamma and production stages , integrate unit testing and integration stages , and finally add a manual approval step
+    This project is to create public CRUD api gateway to read/write update the target list
     <br />
 
   </p>
@@ -41,7 +41,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-In this project we are deploying a pipeline that will automate the code deploy and test step Code Pipeline automates the build, test, and deploy phases of your release process every time there is a code change, based on the release model you define. This enables you to deliver features and updates rapidly and reliably.
+CRUD stands for Create, Read, Update, and Delete. But put more simply, in regards to its use in RESTful APIs, CRUD is the standardized use of HTTP Action Verbs. This means that if you want to create a new record you should be using “POST.” If you are trying to read a record, you should be using “GET.” To update a record utilizing “PUT” or “PATCH.” And to delete a record, using “DELETE.”
  `waheed2021skipq`, `ProximaCentauri`
 
 
@@ -98,9 +98,9 @@ sudo ./aws/install
    sh
    npm install
    ```
-4. Create pipelinestack
+4. Create api gateway 
   ```
-  Create a stack.py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html" as reference
+  Create a stack.py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.aws_apigateway.html" as reference
   ```
  
 5. Add testing 
@@ -108,9 +108,9 @@ sudo ./aws/install
   add testing (unit,integrations) by following reference "https://docs.aws.amazon.com/cdk/api/v1/python/modules.html"
   ```
 
-6.  use this command to bootsrap your pipeline
+6. Try CRUD operations
   ```
-  "cdk bootstrap --qualifier <name> --toolkit-stack-name <somename>"
+  "GET, POST,PUT etc"
   ```
   
 7. Deploy
@@ -127,7 +127,7 @@ Always git push to make the changes work through pipeline
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Pipeline automates the build, test, and deploy phases of your release process every time there is a code change, AWS CodePipeline is a continuous delivery service you can use to model, visualize, and automate the steps required to release your software. You can quickly model and configure the different stages of a software release process. CodePipeline automates the steps required to release your software changes continuously. For information about pricing for CodePipeline
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -135,12 +135,12 @@ Pipeline automates the build, test, and deploy phases of your release process ev
 <!-- ROADMAP -->
 ## Roadmap
 
-- [] Simple pipeline
-- [] Added beta stage
+- [] S3 to dynamoDB
+- [] Implement Crud commands on dynamoDB
 - [] Testing stages
     - [] Unit testing
     - [] Integration testing
-- [] Manual approval step
+- [] Documentation
 
 
 
@@ -167,6 +167,7 @@ Project Link: [https://github.com/waheed2021skipq/ProximaCentauri](https://githu
 ## References
 
 [https://docs.aws.amazon.com/cdk/api/v1/python/modules.html]
+[https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.aws_apigateway.html]
 
 
 
