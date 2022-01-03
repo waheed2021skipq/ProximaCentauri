@@ -67,5 +67,4 @@ class waheedsprint3(cdk.Stack):
         pipeline.add_stage(beta, pre = [unit_test])
         pipeline.add_stage(gemma, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")])
         # if i add pre manual approval so it gets paused for human manual  approval tll then it is not deployed
-        # pipeline.add_stage(prod, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")]) 
 

@@ -17,4 +17,4 @@ class ProductionStage(core.Stage):
 
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)
-        waheed_db_stack2=waheedsprint3(self,"waheedstack3")  #stage for adding stage
+        waheed_db_stack12=waheedsprint3(self,"waheedstack3")  #stage for adding stage
