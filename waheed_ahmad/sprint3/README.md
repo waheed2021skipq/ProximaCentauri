@@ -100,7 +100,7 @@ sudo ./aws/install
    ```
 4. Create api gateway 
   ```
-  Create a stack.py file and create a stack using "https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.aws_apigateway.html" as reference
+  Create api "https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.aws_apigateway.html" as reference
   ```
  
 5. Add testing 
