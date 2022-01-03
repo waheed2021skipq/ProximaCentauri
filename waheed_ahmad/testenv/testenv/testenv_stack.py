@@ -17,7 +17,7 @@ from aws_cdk import (
 from resources import constants as constant_
 from resources.s3bucket_read import s3bucket_read as bucket_ 
 
-class waheedsprint3(cdk.Stack):
+class waheedsprint33(cdk.Stack):
 
     def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)

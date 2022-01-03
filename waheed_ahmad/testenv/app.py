@@ -3,11 +3,11 @@ import os
 
 import aws_cdk as cdk
 from aws_cdk import core
-from testenv.testenv_stack import waheedsprint3
+from testenv.pipelinewaheed_stack import waheedsprint3pipelinestack
 
 
 app = core.App()
-waheedsprint3(app, "waheedsprint3", env=core.Environment(account='315997497220', region='us-east-2'))
+waheedsprint3pipelinestack(app, "waheedsprint3pipelinestack", env=core.Environment(account='315997497220', region='us-east-2'))
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.

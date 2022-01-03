@@ -11,10 +11,10 @@ from aws_cdk import (
     aws_dynamodb as db
 )
 from aws_cdk import core
-from testenv.testenv_stack import waheedsprint3
+from testenv.testenv_stack import waheedsprint33
 
 class ProductionStage(core.Stage):
 
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)
-        waheed_db_stack12=waheedsprint3(self,"waheedstack3")  #stage for adding stage
+        waheed_db_stack12=waheedsprint33(self,"waheedstack3")  #stage for adding stage

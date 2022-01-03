@@ -7,7 +7,8 @@ from aws_cdk import aws_codepipeline_actions as cpactions
 from aws_cdk import pipelines
 from testenv.pipelinewaheed_stage import ProductionStage
 
-class waheedsprint3(cdk.Stack):
+class waheedsprint3pipelinestack(cdk.Stack):
+    
 
     def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
