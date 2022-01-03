@@ -1,4 +1,7 @@
-URL_TO_MONITOR='www.twitter.com'
-URL_MONITOR_NAMESPACE="waheedwebhealth"
-URL_MONITOR_NAME_AVAILABILITY= "url_availabiloty"
-URL_MONITOR_NAME_LATENCY= "url_latency"
+URL_NameSpace="waheed_WebHealth_Monitor"
+URL_Aailibilty = "waAvailibilty"
+URL_Latency = "waLatency"
+threshold = [0.29,0.27,0.21,0.22]
+bucket = "waheedbuc"
+file_name = "urls.json"
+#url_table="ProdStage-irfanstack-irfanurltableF418808E-1JBXJLRJLDGQB"

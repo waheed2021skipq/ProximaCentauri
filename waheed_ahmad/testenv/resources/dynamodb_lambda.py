@@ -1,20 +1,21 @@
-import json
 import boto3
 import os
-#from dynamo import dynamodbPut
+import json
+import constants as constant_
 
-def lambda_handler(events, context):
+def lambda_handler(event, context):
+    #print(eveny)
     client = boto3.client('dynamodb')
-    msg1 = event['Records'][0]['Sns']['MessageId']
-    msg2 = event['Records'][0]['Sns']['Timestamp']
     
-    name = os.getenv('table_name')
+######### getiing timssetamp && message details fromm even(alarm)  #########################
+    message = event['Records'][0]['Sns']
+    msg = json.loads(message['Message'])  
+    reason = msg['NewStateReason']
+    timestamp=message['Timestamp']
+####### getting name of table ##############################################################
     
-    
-    client_.put_item(
-        TableName = name,
-        Item={
-            'alarmdetails':{'S' : msg1},
-            'timestamp':{'S': msg2}
-        #     'URL':{'S':parsed_msg['Trigger']['Dimensions'][0]['value']}
-         })
+    tablename = os.getenv('table_name')#getting table name
+
+    #print(reason)
+########### puuting Item in dynamo DB ####################################################3
+    client.put_item(TableName= tablename,Item={'Timestamp':{'S' : timestamp}, 'Reason':{'S':reason} })
