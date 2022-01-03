@@ -47,10 +47,10 @@ class waheedsprint2(cdk.Stack):
             'region':'us-east-2'
         })
         
-        prod = ProductionStage(self,'prod',env={
-            'account':'315997497220',
-            'region':'us-east-2'
-        })
+        # prod = ProductionStage(self,'prod',env={
+        #     'account':'315997497220',
+        #     'region':'us-east-2'
+        # })
         
         
         
@@ -64,8 +64,8 @@ class waheedsprint2(cdk.Stack):
             commands=[ "cd waheed_ahmad/sprint3",
                     "pip install -r requirements.txt","pytest integtest"]    )
         
-        pipeline.add_stage(beta)
-        pipeline.add_stage(gemma, pre= [unit_test])  
+        pipeline.add_stage(beta, pre = [unit_test])
+        pipeline.add_stage(gemma, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")])
         # if i add pre manual approval so it gets paused for human manual  approval tll then it is not deployed
-        pipeline.add_stage(prod, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")]) 
+        # pipeline.add_stage(prod, pre=[integ_test],post=[pipelines.ManualApprovalStep("promotetodeployment")]) 
 

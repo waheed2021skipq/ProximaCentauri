@@ -2,8 +2,9 @@ import urllib3
 import datetime
 from cloudmatricdata import cloudmetric1
 import constants as constants
-from s3 import mywahedbuks3 as buk
-
+from s3b import s3bukclass as buk
+import tablelambda as rwtab
+import boto3,os
 # URL_TO_MONITOR='www.twitter.com'
 # URL_MONITOR_NAMESPACE="waheedwebhealth"
 # URL_MONIROR_NAME_AVAILABILITY= "url_availabiloty"
@@ -11,13 +12,13 @@ from s3 import mywahedbuks3 as buk
 
 def lambda_handler(events,context):
     cw= cloudmetric1();
-     
-    Url_Monitor= buk().bucket_as_list()
+    url_values=[]
+    urllllMon = buk('waheedbuc','urls.json').read_buk()
+    monitoringurl = rwtab.gettable(os.getenv(key ='table_name'))
     
     values = dict()
-    four_url_values  = []
-    abc = 1
-    for url in Url_Monitor:
+    abc=1
+    for url in monitoringurl:
         avail = get_availability(url)
         dimensions=[
         {'Name': 'URL', 'Value': url}
@@ -36,8 +37,8 @@ def lambda_handler(events,context):
         a+=1
     
         values.update({"avaiability":avail, "Latency":latency})
-        four_url_values.append(values)
-    return four_url_values
+        url_values.append(values)
+    return url_values
     
     # avail= get_availability()   #now we are putting matrices to cloudwatch  
     # dimensions=[
@@ -61,7 +62,7 @@ def lambda_handler(events,context):
     # values.update({"Availability": avail,"Latency":latency})
     # return values
 
-def get_availability():
+def get_availability(url):
     http=urllib3.PoolManager()
     response=http.request("GET", url )
     if response.status==200:
@@ -69,7 +70,7 @@ def get_availability():
     else:
         return 0.0
     
-def get_latency():
+def get_latency(url):
     http=urllib3.PoolManager()
     start=datetime.datetime.now()
     response=http.request("GET",url)

@@ -2,19 +2,19 @@ import json
 import boto3
 import os
 #from dynamo import dynamodbPut
-client = boto3.client('dynamodb')
+
 def lambda_handler(events, context):
-    
-    message = event['Records'][0]['Sns']
-    parsed_msg = json.loads(message['Message'])
+    client = boto3.client('dynamodb')
+    msg1 = event['Records'][0]['Sns']['MessageId']
+    msg2 = event['Records'][0]['Sns']['Timestamp']
     
     name = os.getenv('table_name')
     
     
-    client.dynamodbPut(
+    client.put_item(
         TableName = name,
         Item={
-            'Timestamp':{'S' : message['Timestamp']},
-            'Reason':{'S':parsed_msg['NewStateReason']},
-            'URL':{'S':parsed_msg['Trigger']['Dimensions'][0]['value']}
-        })
+            'alarmdetails':{'S' : msg1},
+            'timestamp':{'S': msg2}
+        #     'URL':{'S':parsed_msg['Trigger']['Dimensions'][0]['value']}
+         })

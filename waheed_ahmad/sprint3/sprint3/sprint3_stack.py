@@ -5,25 +5,30 @@ from aws_cdk import (
     aws_events_targets as targets_,
     aws_iam,
     aws_cloudwatch as cloudwatch_,
+    aws_lambda_event_sources as sources_,
     aws_cloudwatch_actions as actions_,
     aws_sns as sns,
     aws_sns_subscriptions as subscriptions_,
     aws_codedeploy as codedeploy,
-    aws_dynamodb as db
-    #aws_s3 as s3,
-    #aws_sqs as sqs,
-    #aws_s3_notifications as s3n
+    aws_dynamodb as db,
+    aws_apigateway as apigateway,
+    aws_s3 as s3,
+    aws_sqs as sqs,
+    aws_s3_notifications as s3n
 )
 #import Construct as Construct
 from resources import constants as constants
 import resources as resources
-from resources.s3 import mywahedbuks3 as buk
-# #from aws_cdk import core
-# URL_TO_MONITOR='www.twitter.com'
-# URL_MONITOR_NAMESPACE="waheedwebhealth"
-# URL_MONIROR_NAME_AVAILABILITY= "url_availability"
-# URL_MONIROR_NAME_LATENCY= "url_latency"
-
+from resources import s3b
+from resources import dyTabS3
+import logging
+# from resources.controller import Controller
+# from resources.handler import Handler
+# from resources.repository import DynamoDBTaskRepository
+from resources.s3b import s3bukclass as buk
+from resources import constants as constants
+Table_NAME= "waheeds3table"
+from resources import tablelambda as read
 
 class waheedsprint2(cdk.Stack):
 
@@ -34,7 +39,7 @@ class waheedsprint2(cdk.Stack):
 
 
 
-###########defining roles
+# ---------------------------------------------- defining roles for web health------------------------#
         lambda_role= self.create_lambda_role()
         hw_lambda = self.create_lambda('lambda', './resources', 'webhealthmonitor.lambda_handler', lambda_role)
         lambda_schedule= events_.Schedule.rate(cdk.Duration.minutes(1))
@@ -43,29 +48,61 @@ class waheedsprint2(cdk.Stack):
                             description= "call lambda periodic", 
                             enabled= True ,
                             schedule= lambda_schedule,
-                            targets= [lambda_target]) #remeber the braces, i spent so much time to figure out this error, cz this is treateda as array
+                            targets= [lambda_target]) #remember the braces, i spent so much time to figure out this error, cz this is treateda as array
+        
+        ## ------------------- create a table in dynamoDB to use  and dblambda------------------- ##
         
         
-        ####### dynamoo table 
-        dynamo_table=self.create_table(id='waheedalarmtable',
-                                        key=db.Attribute(name="Timestamp",
+        
+        urltable=self.create_table(id='waheedurltable',
+                                        key=db.Attribute(name="Links",
                                         type=db.AttributeType.STRING))
         db_lambda_role = self.create_dbtable_lambda_role()
+        s3_lambda = self.create_lambda("sprint3Lambda", "./resources", "s3lambda.lambda_handler", db_lambda_role)
+        
         db_lambda = self.create_lambda("DynamoDBLambda", "./resources", 'dynamodb_lambda.lambda_handler', lambda_role)
+        # s3_lambda = self.create_lambda('s3lambda',"./resources/",'dynamoSp3.lambda_handler',db_lambda_role)
+        # s3_lambda.add_environment('table_name', urltable.table_name)
         
-        dynamo_table.grant_full_access(db_lambda)
-        db_lambda.add_environment('table_name', dynamo_table.table_name)
+        #dynamo_table.grant_full_access(db_lambda)
+        buckkk = s3b.s3bukclass(self, "waheedbuc")
+        s3_lambda.add_event_source(sources_.S3EventSource(buckkk,
+                                    events=[s3.EventType.OBJECT_CREATED],
+                                    filters=[s3.NotificationKeyFilter(suffix=".json")]
+                                    ))
+        # urltable.grant_full_access(s3_lambda)
+        # hw_lambda.add_environment('table_name', urltable.table_name)
+        # s3_lambda.add_environment('table_name', urltable.table_name)
         
-        # waheedbucket= s3.Bucket(self, "waheedbkt")
-    
-        # queue = sqs.Queue(self, 'buckQ',
-        # visibility_timeout=cdk.Duration.seconds(300) ) 
-        #waheedbucket.add_event_notification( s3.EventType.OBJECT_CREATED, s3n.SqsDestination(queue) )
+        # api_definition_s3_location = apigateway.ApiDefinitionS3Location(
+        #                                             bucket="waheedbuc",
+        #                                             key="key")
+        # crud_lambda = self.create_lambda('crudlambda',
+        #                                 "./resources1/",
+        #                                 'CRUD_api_lambda.lambda_handler',
+        #                                 db_lambda_role)
+        # crud_lambda.add_environment(key = 'table_name', 
+        #                             value = constants.TABLENAME)
+        # crud_lambda.grant_invoke( aws_iam.ServicePrincipal("apigateway.amazonaws.com"))
+        # urltable.grant_read_write_data(crud_lambda) 
         
-       # db.table.grant_read_write_data(db_lambda)
-        #####also provide full read write access to table
+        # api = apigateway.LambdaRestApi(self, "waheedapiiiigatewayy",handler= crud_lambda)
+        # items = api.root.add_resource("items")
+        # items.add_method("GET") 
+        # items.add_method("PUT") 
+        # items.add_method("DELETE")
         
-        #####module code for sending sns notifications########################################################
+        
+        # s3_lambda.add_environment(key = 'table_name', 
+        #                         value = )
+                                
+                                
+                                
+        # hw_lambda.add_environment(key = 'table_name', 
+        #                         value = )
+                                
+                                
+        #-----------------------------notifications subscriptions------------------------------------ #
         topic =sns.Topic(self, "webhealthmonitortopic")
         topic.add_subscription(subscriptions_.EmailSubscription('waheed.ahmad.s@skipq.org'))
         topic.add_subscription(subscriptions_.LambdaSubscription(fn=db_lambda))
@@ -73,20 +110,21 @@ class waheedsprint2(cdk.Stack):
         
         
         
-        #for urls in s3_buckk
-        Url_Monitor = buk().bucket_as_list()
-        b=1
-        for url in Url_Monitor:
+        
+        #------------------------alarms and matrices-----------------------------------------------#
+        URlstomonitor = buk('waheeds3buk','urls.json').read_buk()
+        linkx = read.gettable(Table_NAME)
+        conss= 1
+        for url in linkx:
             dimension={'URL' : url}
-           #####alarm to raise, sprint 2 pipeline
               
             availability_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
-                                                    metric_name= constants.URL_MONIROR_NAME_AVAILABILITY,
+                                                    metric_name= constants.URL_MONITOR_NAME_AVAILABILITY,
                                                     dimensions_map=dimension,
                                                     period=cdk.Duration.minutes(1),
                                                     label= 'Availability Metric')
             availability_alarm= cloudwatch_.Alarm(self, 
-    			id='AvailabilityAlarm'+'_'+url,
+    			id='AvailabilityAlarm'+'_'+constants.URL_TO_MONITOR,
     			metric= availability_metric , 
     			comparison_operator= cloudwatch_.ComparisonOperator.LESS_THAN_THRESHOLD  , 
     			datapoints_to_alarm=1, 
@@ -95,12 +133,12 @@ class waheedsprint2(cdk.Stack):
         
             dimension={'URL':url}
             latency_metric=cloudwatch_.Metric(namespace=constants.URL_MONITOR_NAMESPACE, 
-                                             metric_name=constants.URL_MONIROR_NAME_LATENCY,
+                                             metric_name=constants.URL_MONITOR_NAME_LATENCY,
                                              dimensions_map=dimension,
                                              period=cdk.Duration.minutes(1),
                                              label= 'latency Metric' )
             latency_alarm= cloudwatch_.Alarm(self, 
-    			id='LatencyAlarm'+'_'+url,
+    			id='LatencyAlarm'+'_'+constants.URL_TO_MONITOR,
     			metric= latency_metric , 
     			comparison_operator= cloudwatch_.ComparisonOperator.GREATER_THAN_THRESHOLD , 
     			datapoints_to_alarm=1, 
@@ -108,7 +146,7 @@ class waheedsprint2(cdk.Stack):
     		 	threshold=0.25 )
             availability_alarm.add_alarm_action(actions_.SnsAction(topic))
             latency_alarm.add_alarm_action(actions_.SnsAction(topic))
-            b =b + 1
+            conss+=1
     
     ##########link the alarm to subscription
         

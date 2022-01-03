@@ -3,13 +3,12 @@ import boto3
 import json
 
 def lambda_handler(event, context):
-    # TODO implement
-    dynamodbTable = boto3.resource('dynamodb').Table('menu')
-    api_menu = event['params']['path']['menu-id']
+    dynamodbTable = boto3.resource('dynamodb').Table('waheeds3table')
+    api_menu = event['params']['path']['URL_ADDRESS']
 
     result = dynamodbTable.get_item(
         Key={
-            'menu_id': api_menu
+            'url': api_menu
         }
         )
 

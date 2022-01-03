@@ -2,8 +2,8 @@ from __future__ import print_function
 import boto3
 
 def lambda_handler(event, context):
-    Table = boto3.resource('dynamodb').Table('menu')
-    api_menu = event['params']['path']['menu-id']
+    Table = boto3.resource('dynamodb').Table('waheeds3table')
+    api_menu = event['params']['path']['URL_ADDRESS']
 
 
     Table.delete_item(
